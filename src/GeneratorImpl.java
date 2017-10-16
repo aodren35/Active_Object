@@ -1,6 +1,12 @@
 public class GeneratorImpl implements Generator {
 
-    public int v;
+	private int v;
+	@Override
+	public void attach(Observer<Generator> o) {
+		// TODO Auto-generated method stub
+		
+	}
+    
 
     @java.lang.Override
     public int getValue() {
