@@ -1,5 +1,4 @@
-public interface Generator {
-    public void attach(Observer<Generator> o);
+public interface Generator extends Subject {
 
     public int getValue();
 }
