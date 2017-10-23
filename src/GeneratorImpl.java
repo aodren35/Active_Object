@@ -1,9 +1,16 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class GeneratorImpl implements Generator {
 
 	private int v;
+	
+	GetValue gV;
+	
+	List<AlgoDiffusion> algo = new ArrayList<AlgoDiffusion>(); 
     
     @Override
-    public int getValue() {
+    public int getValue(Generator subject) {
         return 0;
     }
 
@@ -17,6 +24,12 @@ public class GeneratorImpl implements Generator {
 	public void detach(Observer<Subject> obs) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int getValue() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

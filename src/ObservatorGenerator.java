@@ -1,5 +1,5 @@
 public interface ObservatorGenerator {
-
-    public Generator update (Generator subject);
+    
+	public void update(Generator subject);
 
 }
