@@ -1,4 +1,4 @@
-public class DiffusionAtomique implements AlgoDiffusion {
+public class DiffusionSequentielle implements AlgoDiffusion {
 
 	GeneratorImpl genImpl;
 	
