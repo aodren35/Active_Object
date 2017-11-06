@@ -1,3 +1,9 @@
+package strategy;
+
+import observer.Generator;
+import observer.GeneratorImpl;
+import strategy.AlgoDiffusion;
+
 public class DiffusionSequentielle implements AlgoDiffusion {
 
 	GeneratorImpl genImpl;

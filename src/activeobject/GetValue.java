@@ -1,5 +1,8 @@
+package activeobject;
 
-public class Update implements Callable {
+import observer.GeneratorImpl;
+
+public class GetValue implements Callable {
 
 	GeneratorImpl generator;
 	

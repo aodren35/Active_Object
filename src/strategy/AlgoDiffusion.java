@@ -1,3 +1,7 @@
+package strategy;
+
+import observer.Generator;
+
 public interface AlgoDiffusion {
 
     public void execute();
