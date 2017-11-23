@@ -1,12 +1,12 @@
 package Canal;
 
-import activeobject.Future;
 import activeobject.SchedulerExecutorService;
 import observer.*;
 import Display.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
 
 public class Canal implements ObservatorGenerator, Generator, GeneratorAsync {
 
@@ -54,7 +54,7 @@ public class Canal implements ObservatorGenerator, Generator, GeneratorAsync {
 	}
 
 	@Override
-	public Future getValue(int n) {
+	public Future<Integer> getValue(int n) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,7 +1,8 @@
 package observer;
 
-import activeobject.Future;
 import observer.Generator;
+
+import java.util.concurrent.Future;
 
 public interface ObservatorGeneratorAsync {
 

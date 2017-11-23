@@ -1,9 +1,10 @@
 package observer;
 
-import activeobject.Future;
+
+import java.util.concurrent.Future;
 
 public interface GeneratorAsync {
 
-	public Future getValue(int n);
+	public Future<Integer> getValue(int n);
 
 }
