@@ -49,7 +49,6 @@ public class GeneratorImpl implements Generator, Subject {
 
 	@Override
 	public int getValue() {
-		// TODO Auto-generated method stub
 		return v;
 	}
 

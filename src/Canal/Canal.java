@@ -1,17 +1,17 @@
 package Canal;
 
-import activeobject.SchedulerExecutorService;
+import activeobject.GetValue;
 import observer.*;
 import Display.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
-public class Canal implements ObservatorGenerator, Generator, GeneratorAsync {
+public class Canal implements ObservatorGeneratorAsync, GeneratorAsync {
 
 	private Display displayGetValue;
-	private SchedulerExecutorService sES;
+	private ScheduledExecutorService sES;
 	private List<Observer> observers;
  	private Generator gen;
  	private Display dis;
@@ -22,15 +22,8 @@ public class Canal implements ObservatorGenerator, Generator, GeneratorAsync {
 		this.gen = gen;
 		//encapsulation afficheur
 		this.dis = dis;
+		this.sES = Executors.newScheduledThreadPool(4);
 	}
-
-	public void update(Generator subject) {
-    	this.dis.update(this);
-    }
-
-    public int getValue(Generator subject) {
-    	return 0;
-    }
 
 	@Override
 	public void attach(Observer<Subject> obs) {
@@ -46,17 +39,16 @@ public class Canal implements ObservatorGenerator, Generator, GeneratorAsync {
 		
 	}
 
-	@Override
-	public int getValue() {
-		// TODO Auto-generated method stub
-		//manière synchrone
-		return this.gen.getValue();
-	}
 
 	@Override
 	public Future<Integer> getValue(int n) {
-		// TODO Auto-generated method stub
-		return null;
+		// GetValue
+		GetValue gv = new GetValue(this.gen, this);
+		return this.sES.schedule(gv, 1000, TimeUnit.MILLISECONDS);
 	}
 
+	@Override
+	public Future update(Generator subject) {
+		return null;
+	}
 }
