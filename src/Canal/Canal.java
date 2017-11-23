@@ -1,6 +1,7 @@
 package Canal;
 
 import activeobject.GetValue;
+import activeobject.Update;
 import observer.*;
 import Display.*;
 
@@ -48,7 +49,9 @@ public class Canal implements ObservatorGeneratorAsync, GeneratorAsync {
 	}
 
 	@Override
-	public Future update(Generator subject) {
-		return null;
+	public Future<Integer> update(Generator subject) {
+		// Update
+		Update up = new Update(this.gen, this);
+		return this.sES.schedule(up, 1000, TimeUnit.MILLISECONDS);
 	}
 }
