@@ -14,7 +14,7 @@ public class Display implements ObservatorGenerator {
         this.canalGetValue = canalGetValue;
     }
 
-    //Pour récupérer valeur javaFX aldos
+    //Pour récupérer valeur javaFX algos
     public int getV() {
         return value;
     }

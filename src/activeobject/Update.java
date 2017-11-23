@@ -2,12 +2,14 @@ package activeobject;
 
 import observer.GeneratorImpl;
 
-public class Update implements Callable {
+import java.util.concurrent.Callable;
+
+public class Update implements Callable<Integer> {
 
 	GeneratorImpl generator;
 	
 	@Override
-	public int call() {
+	public Integer call() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
