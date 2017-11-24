@@ -8,13 +8,14 @@ import java.util.List;
 public interface Generator  {
 
 
-	public void attach (Observer<Generator> obs);
-	public void detach (Observer<Generator> obs);
-	public int getValue();
-	public AlgoDiffusion getAlgo();
-	public void setAlgoDiffusion(AlgoDiffusion algo);
-	public void change();
-	public IntegerProperty getValueProperty();
-	public List<Observer<Generator>> getObservers();
+	void attach(Observer<Generator> obs);
+	void detach(Observer<Generator> obs);
+	int getValue();
+	void setValue(int v);
+	AlgoDiffusion getAlgo();
+	void setAlgoDiffusion(AlgoDiffusion algo);
+	void change();
+	IntegerProperty getValueProperty();
+	List<ObservatorGeneratorAsync> getObservers();
 
 }

@@ -1,6 +1,7 @@
 package Display;
 
 import Canal.Canal;
+import javafx.beans.property.SimpleIntegerProperty;
 import observer.Generator;
 import observer.GeneratorAsync;
 import observer.ObservatorGenerator;
@@ -12,15 +13,22 @@ public class Display implements ObservatorGenerator {
 
 	private Canal canalGetValue;
 
-	private int value;
+	private int value = 0;
+
+	private SimpleIntegerProperty valueProperty = new SimpleIntegerProperty();
 
     public Display(Canal canalGetValue) {
+
         this.canalGetValue = canalGetValue;
     }
 
     //Pour récupérer valeur javaFX algos
-    public int getV() {
+    public int getValueAfficheur() {
         return value;
+    }
+
+    public SimpleIntegerProperty getValueProperty() {
+        return this.valueProperty;
     }
 
     public void setCanalGetValue(Canal canalGetValue) {
@@ -28,11 +36,11 @@ public class Display implements ObservatorGenerator {
     }
 
     //Generator = canal => Héritage !!!
-    public void update (Generator subject){
-
+    public void update (GeneratorAsync generatorAsync){
         try {
-            GeneratorAsync ga = (GeneratorAsync)subject;
-            this.value = ga.getValue().get();
+            int v = generatorAsync.getValue().get();
+            this.value = v;
+            this.valueProperty.set(v);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

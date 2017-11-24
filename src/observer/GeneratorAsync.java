@@ -6,8 +6,8 @@ import java.util.concurrent.Future;
 public interface GeneratorAsync {
 
 
-	public void attach (Observer<Generator> obs);
-	public void detach (Observer<Generator> obs);
-	public Future<Integer> getValue();
+	 void attach (ObservatorGenerator obs);
+	 void detach (ObservatorGenerator obs);
+	 Future<Integer> getValue();
 
 }

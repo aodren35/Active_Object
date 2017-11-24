@@ -1,14 +1,12 @@
 package strategy;
 
-import observer.Generator;
-import observer.GeneratorAsync;
-import observer.GeneratorImpl;
-import observer.Observer;
+import observer.*;
 import strategy.AlgoDiffusion;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class DiffusionAtomique implements AlgoDiffusion {
@@ -18,6 +16,7 @@ public class DiffusionAtomique implements AlgoDiffusion {
 	
 	private Generator genImpl;
 
+	private int counter = 0;
 
     @Override
     public void configure(Generator generator) {
@@ -28,7 +27,16 @@ public class DiffusionAtomique implements AlgoDiffusion {
     public void execute() {
         // List<Observer<Generator>> copyList = new ArrayList<>(this.genImpl.getObservers().size());
         // Collections.copy(copyList, this.genImpl.getObservers());
-        //for(Observer<Generator> obs:copyList) {
-        //}
+        for(ObservatorGeneratorAsync obs:this.genImpl.getObservers()) {
+            Future<Boolean> future = obs.update(this.genImpl);
+            try {
+                System.out.println(future.get());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            counter ++;
+        }
     }
 }

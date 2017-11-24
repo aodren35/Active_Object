@@ -3,20 +3,25 @@ package Ui;
 import Canal.Canal;
 import Display.Display;
 import IHM.Clock;
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.util.converter.NumberStringConverter;
 import observer.Generator;
 import observer.GeneratorImpl;
 import observer.ObservatorGenerator;
 import strategy.AlgoDiffusion;
 import strategy.DiffusionAtomique;
+import strategy.DiffusionEpoque;
+import strategy.DiffusionSequentielle;
+
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,6 +45,7 @@ public class Controller implements Initializable{
     private ObservatorGenerator afficheur4 = new Display(canal4);
 
     private Clock clock;
+    private BooleanProperty started = new SimpleBooleanProperty();
 
     @FXML
     TextField afficheur1Value1 = new TextField();
@@ -53,15 +59,58 @@ public class Controller implements Initializable{
     @FXML
     TextField afficheur1Value4 = new TextField();
 
+    @FXML
+    RadioButton diffusionAtomique = new RadioButton();
+
+    @FXML
+    RadioButton sequentiel = new RadioButton();
+
+    @FXML
+    RadioButton epoque = new RadioButton();
+
+    @FXML
+    Button start = new Button();
+
+    @FXML
+    Button stop = new Button();
+
+
 
     public void start() {
-
+        this.started.set(true);
+        this.generator.setAlgoDiffusion(this.algo);
         clock.activation(this.generator, 1000);
 
     }
 
     public void stop() {
+        this.started.set(false);
         clock.stop();
+    }
+
+    @FXML
+    public void switchAlgo(ActionEvent event) {
+        if (this.started.getValue()){
+            this.stop();
+            // this.generator.setValue(0);
+        }
+
+        if(event.getSource().equals(this.diffusionAtomique)) {
+            this.algo = new DiffusionAtomique();
+            this.algo.configure(this.generator);
+            this.sequentiel.selectedProperty().set(false);
+            this.epoque.selectedProperty().set(false);
+        } else if (event.getSource().equals(this.sequentiel)){
+            this.algo = new DiffusionSequentielle();
+            this.algo.configure(this.generator);
+            this.diffusionAtomique.selectedProperty().set(false);
+            this.epoque.selectedProperty().set(false);
+        } else {
+            this.algo = new DiffusionEpoque();
+            this.algo.configure(this.generator);
+            this.diffusionAtomique.selectedProperty().set(false);
+            this.sequentiel.selectedProperty().set(false);
+        }
     }
 
     @Override
@@ -71,7 +120,7 @@ public class Controller implements Initializable{
 
         this.algo = new DiffusionAtomique();
         this.algo.configure(this.generator);
-        this.generator.setAlgoDiffusion(this.algo);
+
 
         this.canal1.setGenerator(this.generator);
         this.canal2.setGenerator(this.generator);
@@ -87,14 +136,16 @@ public class Controller implements Initializable{
         this.generator.attach(this.canal2);
         this.generator.attach(this.canal3);
         this.generator.attach(this.canal4);
-        System.out.println("LOL DE LOL");
+        System.out.println("LOL DE LOL" + this.afficheur1.getValueAfficheur());
 
-        IntegerProperty fname = new SimpleIntegerProperty();
-        fname.bindBidirectional(this.generator.getValueProperty());
 
-        //contact.firstNameProperty().set("new value");
-       // fname.set("New First Name");
-        this.afficheur1Value3.setText("" + this.generator.getValue());
+        this.afficheur1Value1.textProperty().bindBidirectional(this.afficheur1.getValueProperty(),new NumberStringConverter());
+        this.afficheur1Value2.textProperty().bindBidirectional(this.afficheur2.getValueProperty(),new NumberStringConverter());
+        this.afficheur1Value3.textProperty().bindBidirectional(this.afficheur3.getValueProperty(),new NumberStringConverter());
+        this.afficheur1Value4.textProperty().bindBidirectional(this.afficheur4.getValueProperty(),new NumberStringConverter());
+
+        this.start.disableProperty().bindBidirectional(this.started);
+        this.stop.disableProperty().bind(this.start.disabledProperty().not());
 
     }
 }

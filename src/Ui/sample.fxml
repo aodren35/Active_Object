@@ -58,15 +58,15 @@
                 <Font name="Calibri Bold" size="14.0" />
             </font>
         </Text>
-        <RadioButton layoutX="67.0" layoutY="93.0" mnemonicParsing="false" text="Atomique" textFill="LIGHTSEAGREEN" />
-        <RadioButton layoutX="185.0" layoutY="92.0" mnemonicParsing="false" text="Séquentiel" textFill="LIGHTSEAGREEN">
+        <RadioButton fx:id="diffusionAtomique" layoutX="67.0" layoutY="93.0" mnemonicParsing="false" onAction="#switchAlgo" selected="true" text="Atomique" textFill="LIGHTSEAGREEN" />
+        <RadioButton fx:id="sequentiel" layoutX="185.0" layoutY="92.0" mnemonicParsing="false" onAction="#switchAlgo" text="Séquentiel" textFill="LIGHTSEAGREEN">
             <font>
                 <Font name="Calibri" size="12.0" />
             </font>
         </RadioButton>
-        <RadioButton layoutX="296.0" layoutY="92.0" mnemonicParsing="false" text="Epoque" textFill="LIGHTSEAGREEN" />
-        <Button layoutX="422.0" layoutY="89.0" mnemonicParsing="false" onAction="#start" text="Start" />
-        <Button layoutX="480.0" layoutY="89.0" mnemonicParsing="false" onAction="#stop" text="Stop" />
+        <RadioButton fx:id="epoque" layoutX="296.0" layoutY="92.0" mnemonicParsing="false" onAction="#switchAlgo" text="Epoque" textFill="LIGHTSEAGREEN" />
+        <Button fx:id="start" layoutX="422.0" layoutY="89.0" mnemonicParsing="false" onAction="#start" text="Start" />
+        <Button fx:id="stop" layoutX="480.0" layoutY="89.0" mnemonicParsing="false" onAction="#stop" text="Stop" />
         <Separator layoutX="290.0" layoutY="147.0" opacity="0.28" orientation="VERTICAL" prefHeight="200.0" style="-fx-background-color: grey;" />
         <Separator layoutX="193.0" layoutY="246.0" prefWidth="200.0" />
         <TextField fx:id="afficheur1Value1" layoutX="221.0" layoutY="188.0" prefHeight="25.0" prefWidth="41.0" />

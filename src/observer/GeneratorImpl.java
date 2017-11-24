@@ -16,12 +16,12 @@ public class GeneratorImpl implements Generator {
 
 	private AlgoDiffusion algo;
 
-	private List<Observer<Generator>> observers;
+	private List<ObservatorGeneratorAsync> observers;
 
 
 	public GeneratorImpl(int v) {
 		this.v = v;
-		this.observers = new ArrayList<Observer<Generator>>();
+		this.observers = new ArrayList<>();
 	}
 
 	public Timestamp getTs() {
@@ -35,18 +35,25 @@ public class GeneratorImpl implements Generator {
 
 	@Override
 	public void attach(Observer<Generator> obs) {
-		observers.add(obs);
+		ObservatorGeneratorAsync obs2 = (ObservatorGeneratorAsync) obs;
+		observers.add(obs2);
 		
 	}
 
 	@Override
 	public void detach(Observer<Generator> obs) {
-		observers.remove(obs);
+		ObservatorGeneratorAsync obs2 = (ObservatorGeneratorAsync) obs;
+		observers.remove(obs2);
 	}
 
 	@Override
 	public int getValue() {
 		return v;
+	}
+
+	@Override
+	public void setValue(int v){
+		this.v = v;
 	}
 
 	public void change(){
@@ -78,7 +85,7 @@ public class GeneratorImpl implements Generator {
 		return result;
 	}
 
-	public List<Observer<Generator>> getObservers() {
+	public List<ObservatorGeneratorAsync> getObservers() {
 		return observers;
 	}
 
