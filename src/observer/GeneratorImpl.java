@@ -1,5 +1,7 @@
 package observer;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import strategy.AlgoDiffusion;
 
 import java.sql.Timestamp;
@@ -15,6 +17,7 @@ public class GeneratorImpl implements Generator {
 	private AlgoDiffusion algo;
 
 	private List<Observer<Generator>> observers;
+
 
 	public GeneratorImpl(int v) {
 		this.v = v;
@@ -50,6 +53,7 @@ public class GeneratorImpl implements Generator {
 		this.v++;
 		this.ts = new Timestamp(System.currentTimeMillis());
 		System.out.println(this);
+		this.algo.execute();
 	}
 
 	@Override
@@ -67,4 +71,15 @@ public class GeneratorImpl implements Generator {
 	public void setAlgoDiffusion(AlgoDiffusion algo) {
 		this.algo = algo;
 	}
+
+	public IntegerProperty getValueProperty() {
+		IntegerProperty result = new SimpleIntegerProperty();
+		result.setValue(this.v);
+		return result;
+	}
+
+	public List<Observer<Generator>> getObservers() {
+		return observers;
+	}
+
 }

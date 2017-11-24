@@ -3,10 +3,19 @@ package Ui;
 import Canal.Canal;
 import Display.Display;
 import IHM.Clock;
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import observer.Generator;
 import observer.GeneratorImpl;
 import observer.ObservatorGenerator;
+import strategy.AlgoDiffusion;
 import strategy.DiffusionAtomique;
 
 import java.net.URL;
@@ -14,7 +23,9 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable{
 
-    private Generator generator = new GeneratorImpl(1);
+    private Generator generator = new GeneratorImpl(-1);
+
+    private AlgoDiffusion algo;
 
     private Canal canal1 = new Canal();
     private ObservatorGenerator afficheur1 = new Display(canal1);
@@ -30,6 +41,17 @@ public class Controller implements Initializable{
 
     private Clock clock;
 
+    @FXML
+    TextField afficheur1Value1 = new TextField();
+
+    @FXML
+    TextField afficheur1Value2 = new TextField();
+
+    @FXML
+    TextField afficheur1Value3 = new TextField();
+
+    @FXML
+    TextField afficheur1Value4 = new TextField();
 
 
     public void start() {
@@ -47,8 +69,9 @@ public class Controller implements Initializable{
 
         this.clock = new Clock();
 
-
-        this.generator.setAlgoDiffusion(new DiffusionAtomique());
+        this.algo = new DiffusionAtomique();
+        this.algo.configure(this.generator);
+        this.generator.setAlgoDiffusion(this.algo);
 
         this.canal1.setGenerator(this.generator);
         this.canal2.setGenerator(this.generator);
@@ -65,5 +88,13 @@ public class Controller implements Initializable{
         this.generator.attach(this.canal3);
         this.generator.attach(this.canal4);
         System.out.println("LOL DE LOL");
+
+        IntegerProperty fname = new SimpleIntegerProperty();
+        fname.bindBidirectional(this.generator.getValueProperty());
+
+        //contact.firstNameProperty().set("new value");
+       // fname.set("New First Name");
+        this.afficheur1Value3.setText("" + this.generator.getValue());
+
     }
 }
