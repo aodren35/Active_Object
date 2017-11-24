@@ -1,23 +1,33 @@
 package IHM;
 
+import observer.Generator;
 import observer.GeneratorImpl;
 
-import java.util.Timer;
-import java.util.TimerTask;
+
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 //Parrallelisme
 public class Clock {
 
-    private Timer timer = new Timer();
+    private Timer timer ;
 
-    public void activation(GeneratorImpl gi, double period){
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
+
+
+
+    public void activation(Generator gi, int period){
+        ActionListener taskPerformer = new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 gi.change();
             }
         };
-        timer.schedule(task, 0,(long) period);
+        this.timer = new Timer(period, taskPerformer);
+        this.timer.start();
+    }
+
+    public void stop(){
+        this.timer.stop();
     }
 
 

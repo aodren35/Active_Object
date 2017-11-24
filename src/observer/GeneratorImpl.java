@@ -1,15 +1,12 @@
 package observer;
 
-import observer.Generator;
-import observer.Observer;
-import observer.Subject;
 import strategy.AlgoDiffusion;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GeneratorImpl implements Generator, Subject {
+public class GeneratorImpl implements Generator {
 
 	private int v;
 
@@ -17,12 +14,11 @@ public class GeneratorImpl implements Generator, Subject {
 
 	private AlgoDiffusion algo;
 
-	private List<Observer> observers;
+	private List<Observer<Generator>> observers;
 
-	public GeneratorImpl(int v, AlgoDiffusion algo) {
+	public GeneratorImpl(int v) {
 		this.v = v;
-		this.algo = algo;
-		this.observers = new ArrayList<Observer>();
+		this.observers = new ArrayList<Observer<Generator>>();
 	}
 
 	public Timestamp getTs() {
@@ -35,15 +31,13 @@ public class GeneratorImpl implements Generator, Subject {
 	}
 
 	@Override
-	public void attach(Observer<Subject> obs) {
-		// TODO Auto-generated method stub
+	public void attach(Observer<Generator> obs) {
 		observers.add(obs);
 		
 	}
 
 	@Override
-	public void detach(Observer<Subject> obs) {
-		// TODO Auto-generated method stub
+	public void detach(Observer<Generator> obs) {
 		observers.remove(obs);
 	}
 
@@ -64,5 +58,13 @@ public class GeneratorImpl implements Generator, Subject {
 				"v=" + v +
 				", ts=" + ts +
 				'}';
+	}
+
+	public AlgoDiffusion getAlgo() {
+		return algo;
+	}
+
+	public void setAlgoDiffusion(AlgoDiffusion algo) {
+		this.algo = algo;
 	}
 }

@@ -6,7 +6,7 @@ import observer.GeneratorImpl;
 
 import java.util.concurrent.Callable;
 
-public class Update implements Callable<Integer> {
+public class Update implements Callable<Boolean> {
 
 	private Generator generator;
 	private Canal canal;
@@ -17,8 +17,8 @@ public class Update implements Callable<Integer> {
 	}
 
 	@Override
-	public Integer call() {
-		return this.generator.getValue();
+	public Boolean call() {
+		return true;
 	}
 
 }

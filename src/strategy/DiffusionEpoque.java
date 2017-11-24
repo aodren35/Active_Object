@@ -9,7 +9,7 @@ public class DiffusionEpoque implements AlgoDiffusion {
 	//Lecteur/R�dacteur avec une copie. Les �critures sont permises dans l�original pendant la lecture de la copie.
 
 	
-	GeneratorImpl genImpl;
+	private GeneratorImpl genImpl;
 	
     @Override
     public void configure(Generator generator) {

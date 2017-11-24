@@ -6,7 +6,7 @@ import strategy.AlgoDiffusion;
 
 public class DiffusionSequentielle implements AlgoDiffusion {
 
-	GeneratorImpl genImpl;
+	private GeneratorImpl genImpl;
 	
     @Override
     public void configure(Generator generator) {

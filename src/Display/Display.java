@@ -2,7 +2,11 @@ package Display;
 
 import Canal.Canal;
 import observer.Generator;
+import observer.GeneratorAsync;
 import observer.ObservatorGenerator;
+import observer.Subject;
+
+import java.util.concurrent.ExecutionException;
 
 public class Display implements ObservatorGenerator {
 
@@ -25,7 +29,15 @@ public class Display implements ObservatorGenerator {
 
     //Generator = canal => Héritage !!!
     public void update (Generator subject){
-        this.value = subject.getValue();
+
+        try {
+            GeneratorAsync ga = (GeneratorAsync)subject;
+            this.value = ga.getValue().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
         //Appel automatiquement toString
         System.out.println(this);
     }
@@ -36,4 +48,5 @@ public class Display implements ObservatorGenerator {
                 "value=" + value +
                 '}';
     }
+
 }

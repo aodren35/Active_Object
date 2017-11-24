@@ -4,30 +4,89 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
+<!--
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<children>
+    <Text fill="LIGHTSEAGREEN" layoutX="67.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choisissez l'algorithme souhaité :">
+        <font>
+            <Font name="Calibri Bold" size="14.0" />
+        </font>
+    </Text>
+    <RadioButton layoutX="67.0" layoutY="93.0" mnemonicParsing="false" text="Atomique" textFill="LIGHTSEAGREEN" />
+    <RadioButton layoutX="185.0" layoutY="92.0" mnemonicParsing="false" text="Séquentiel" textFill="LIGHTSEAGREEN">
+        <font>
+            <Font name="Calibri" size="12.0" />
+        </font>
+    </RadioButton>
+    <RadioButton layoutX="296.0" layoutY="92.0" mnemonicParsing="false" text="Epoque" textFill="LIGHTSEAGREEN" />
+    <Button layoutX="422.0" layoutY="89.0" mnemonicParsing="false" text="Start" />
+    <Button layoutX="480.0" layoutY="89.0" mnemonicParsing="false" text="Stop" />
+    <Separator layoutX="290.0" layoutY="147.0" opacity="0.28" orientation="VERTICAL" prefHeight="200.0" style="-fx-background-color: grey;" />
+    <Separator layoutX="193.0" layoutY="246.0" prefWidth="200.0" />
+    <Text fill="LIGHTSEAGREEN" layoutX="220.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Défaut">
+        <font>
+            <Font name="Calibri" size="12.0" />
+        </font>
+    </Text>
+    <Text fill="LIGHTSEAGREEN" layoutX="333.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Atomique">
+        <font>
+            <Font name="Calibri" size="12.0" />
+        </font>
+    </Text>
+    <Text fill="LIGHTSEAGREEN" layoutX="211.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Séquentiel">
+        <font>
+            <Font name="Calibri" size="12.0" />
+        </font>
+    </Text>
+    <Text fill="LIGHTSEAGREEN" layoutX="338.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Epoque">
+        <font>
+            <Font name="Calibri" size="12.0" />
+        </font>
+    </Text>
+    <Text layoutX="220.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="33.087890625" />
+    <Text layoutX="340.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="33.087890625" />
+    <Text layoutX="220.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="33.087890625" />
+    <Text layoutX="340.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="33.087890625" />
+</children>
+</Pane>
+-->
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ui.Controller">
-   <columnConstraints>
-      <ColumnConstraints />
-      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
-   </rowConstraints>
+<Pane prefHeight="300" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ui.Controller">
    <children>
-      <Button mnemonicParsing="false" text="Start" />
-      <Button mnemonicParsing="false" text="Stop" GridPane.columnIndex="4" />
-      <CheckBox mnemonicParsing="false" text="Algo1" GridPane.columnIndex="1" />
-      <CheckBox mnemonicParsing="false" text="Algo2" GridPane.columnIndex="2" />
-      <CheckBox mnemonicParsing="false" text="Algo3" GridPane.columnIndex="3" />
+      <GridPane alignment="center" gridLinesVisible="true" layoutX="0.5" layoutY="0.5">
+         <columnConstraints>
+            <ColumnConstraints maxWidth="141.0" minWidth="36.0" prefWidth="60.0" />
+            <ColumnConstraints maxWidth="105.0" minWidth="0.0" prefWidth="100.0" />
+            <ColumnConstraints maxWidth="145.0" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints maxWidth="160.0" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints maxWidth="94.0" minWidth="10.0" prefWidth="60.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
+         </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" onAction="#start" text="Start" />
+            <Button mnemonicParsing="false" onAction="#stop" text="Stop" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+            <CheckBox mnemonicParsing="false" text="Algo1" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <CheckBox mnemonicParsing="false" text="Algo2" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+            <CheckBox mnemonicParsing="false" text="Algo3" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+         </children>
+      </GridPane>
+       <GridPane alignment="center" gridLinesVisible="true" hgap="10" layoutX="0.5" layoutY="50" vgap="10">
+           <columnConstraints>
+               <ColumnConstraints maxWidth="300.0" minWidth="36.0" prefWidth="210.0" />
+               <ColumnConstraints maxWidth="300.0" minWidth="36.0" prefWidth="210.0" />
+           </columnConstraints>
+           <rowConstraints>
+               <RowConstraints maxHeight="125.0" minHeight="125.0" prefHeight="125.0" />
+               <RowConstraints maxHeight="125.0" minHeight="125.0" prefHeight="125.0" />
+           </rowConstraints>
+           <children>
+
+           </children>
+       </GridPane>
    </children>
-</GridPane>
+</Pane>
