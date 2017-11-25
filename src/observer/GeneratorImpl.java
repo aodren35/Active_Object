@@ -57,10 +57,10 @@ public class GeneratorImpl implements Generator {
 	}
 
 	public void change(){
-		this.v++;
-		this.ts = new Timestamp(System.currentTimeMillis());
-		System.out.println(this);
-		this.algo.execute();
+			this.v++;
+			this.ts = new Timestamp(System.currentTimeMillis());
+			System.out.println(this);
+			this.algo.execute();
 	}
 
 	@Override

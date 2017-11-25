@@ -17,6 +17,8 @@ public class Display implements ObservatorGenerator {
 
 	private SimpleIntegerProperty valueProperty = new SimpleIntegerProperty();
 
+	private boolean available = true;
+
     public Display(Canal canalGetValue) {
 
         this.canalGetValue = canalGetValue;
@@ -40,14 +42,18 @@ public class Display implements ObservatorGenerator {
         try {
             int v = generatorAsync.getValue().get();
             this.value = v;
+            while (!available) {
+            }
+            this.available = false;
             this.valueProperty.set(v);
+            this.available = true;
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
         //Appel automatiquement toString
-        System.out.println(this);
+        // System.out.println(this);
     }
 
     @Override

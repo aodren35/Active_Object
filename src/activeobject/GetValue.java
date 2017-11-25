@@ -18,6 +18,8 @@ public class GetValue implements Callable<Integer> {
 
 	@Override
 	public Integer call() {
+		// System.out.println("Get Value call");
+
 		return this.generator.getValue();
 	}
 

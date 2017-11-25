@@ -13,16 +13,20 @@ public class Clock {
 
     private Timer timer ;
 
-
-
-
     public void activation(Generator gi, int period){
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                gi.change();
+                if (gi.getAlgo().getRunnable()){
+                    new Thread(() -> {
+                        gi.change();
+                    }).start();
+                } else {
+                    return;
+                }
             }
         };
         this.timer = new Timer(period, taskPerformer);
+        this.timer.setRepeats(true);
         this.timer.start();
     }
 

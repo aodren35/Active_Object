@@ -18,6 +18,7 @@ public class Update implements Callable<Boolean> {
 
 	@Override
 	public Boolean call() {
+		// System.out.println("Update call");
 		this.canal.getDisplay().update(this.canal);
 		return true;
 	}
