@@ -2,7 +2,11 @@ package strategy;
 
 import observer.Generator;
 import observer.GeneratorImpl;
+import observer.ObservatorGeneratorAsync;
 import strategy.AlgoDiffusion;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class DiffusionSequentielle implements AlgoDiffusion {
 
@@ -21,7 +25,27 @@ public class DiffusionSequentielle implements AlgoDiffusion {
 
     @Override
     public void execute() {
-
+        this.runnable = false;
+        int x = 1;
+        for(ObservatorGeneratorAsync obs:this.genImpl.getObservers()) {
+            System.out.println("compteur : "+ x);
+            x ++ ;
+            this.runnable = true;
+            boolean finished = false;
+            Future<Boolean> future = obs.update(this.genImpl);
+            try {
+                boolean test = true;
+                finished = future.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            while (!finished) {
+                System.out.println("NOT FINISHED");
+            }
+        }
+        this.runnable = true;
     }
 
     @Override
