@@ -43,8 +43,9 @@ public class Display implements ObservatorGenerator {
     public void update (GeneratorAsync generatorAsync){
         try {
             int v = generatorAsync.getValue().get();
+            System.out.println("Display avant " + this.value + " Display après "+ v);
             this.value = v;
-            System.out.println("Display " + this.value);
+
             while (!available) {
             }
 

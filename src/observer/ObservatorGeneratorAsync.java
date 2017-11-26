@@ -8,6 +8,7 @@ public interface ObservatorGeneratorAsync {
 
 
 	Future<Void> update();
+	void setGenerator(Generator gen);
 
 	
 }

@@ -5,6 +5,9 @@ import observer.GeneratorImpl;
 import observer.ObservatorGeneratorAsync;
 import strategy.AlgoDiffusion;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -27,13 +30,21 @@ public class DiffusionSequentielle implements AlgoDiffusion {
     public void execute() throws ExecutionException, InterruptedException {
         this.runnable = false;
 
+        System.out.println("EXECUTE" + this.genImpl.getValue());
+        List<ObservatorGeneratorAsync> copyList = new ArrayList<>(this.genImpl.getObservers().size());
+        for(int i = 0; i<this.genImpl.getObservers().size(); i++){
+            copyList.add(null);
+        }
+        Collections.copy(copyList, this.genImpl.getObservers());
         Generator genCopy = (GeneratorImpl)((GeneratorImpl)this.genImpl).clone();
         int x = 1;
 
-        genCopy.getObservers().parallelStream().forEach(
+
+        copyList.parallelStream().forEach(
                 observatorGeneratorAsync -> {
                     this.runnable = true;
                     try {
+                        observatorGeneratorAsync.setGenerator(genCopy);
                         observatorGeneratorAsync.update().get();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
