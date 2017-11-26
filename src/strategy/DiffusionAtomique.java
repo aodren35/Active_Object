@@ -34,13 +34,16 @@ public class DiffusionAtomique implements AlgoDiffusion {
         int x = 1;
         this.genImpl.getObservers().parallelStream().forEach(
                 observatorGeneratorAsync -> {
-                    try {
-                        observatorGeneratorAsync.update().get();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    }
+
+                        Future<Void>updateFuture = observatorGeneratorAsync.update();
+                        while(!updateFuture.isDone()){
+                            try {
+                                Thread.sleep(300);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
                 }
         );
         this.runnable = true;

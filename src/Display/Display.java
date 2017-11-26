@@ -10,6 +10,7 @@ import observer.ObservatorGenerator;
 import observer.Subject;
 
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class Display implements ObservatorGenerator {
 
@@ -42,6 +43,10 @@ public class Display implements ObservatorGenerator {
     //Generator = canal => Héritage !!!
     public void update (GeneratorAsync generatorAsync){
         try {
+            Future<Integer> newValue =  generatorAsync.getValue();
+            while  (!newValue.isDone()){
+
+            }
             int v = generatorAsync.getValue().get();
             System.out.println("Display avant " + this.value + " Display après "+ v);
             this.value = v;

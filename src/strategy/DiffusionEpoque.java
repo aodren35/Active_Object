@@ -51,14 +51,18 @@ public class DiffusionEpoque implements AlgoDiffusion {
             copyList.parallelStream().forEach(
                     observatorGeneratorAsync -> {
                         this.runnable = true;
-                        try {
+
                             observatorGeneratorAsync.setGenerator(genCopy);
-                            observatorGeneratorAsync.update().get();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        }
+                            Future<Void>updateFuture = observatorGeneratorAsync.update();
+                            while(!updateFuture.isDone()){
+                                try {
+                                    Thread.sleep(300);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            // updateFuture.get();
+
 
                     }
             );
