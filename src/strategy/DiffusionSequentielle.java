@@ -24,28 +24,24 @@ public class DiffusionSequentielle implements AlgoDiffusion {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws ExecutionException, InterruptedException {
         this.runnable = false;
-        Generator genCopy = this.genImpl;
+
+        Generator genCopy = (GeneratorImpl)((GeneratorImpl)this.genImpl).clone();
         int x = 1;
-        for(ObservatorGeneratorAsync obs:genCopy.getObservers()) {
-            System.out.println("compteur : "+ x);
-            x ++ ;
-            this.runnable = true;
-            boolean finished = false;
-            Future<Boolean> future = obs.update(genCopy);
-            try {
-                boolean test = true;
-                finished = future.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-            while (!finished) {
-                System.out.println("NOT FINISHED");
-            }
-        }
+
+        genCopy.getObservers().parallelStream().forEach(
+                observatorGeneratorAsync -> {
+                    this.runnable = true;
+                    try {
+                        observatorGeneratorAsync.update().get();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
         this.runnable = true;
     }
 

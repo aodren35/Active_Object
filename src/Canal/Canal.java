@@ -50,9 +50,9 @@ public class Canal implements ObservatorGeneratorAsync, GeneratorAsync {
 	}
 
 	@Override
-	public Future<Boolean> update(Generator subject) {
+	public Future<Void> update() {
 		// Update
-		Update up = new Update(this.generator, this);
+		Update up = new Update(this.display, this);
 		//this.completionUpdate.submit(up);
 		return this.sES.schedule(up, 1000, TimeUnit.MILLISECONDS);
 	}
@@ -73,8 +73,4 @@ public class Canal implements ObservatorGeneratorAsync, GeneratorAsync {
 		this.generator = generator;
 	}
 
-	@Override
-	public void update(Object subject) {
-		System.out.println("TEST");
-	}
 }

@@ -32,7 +32,7 @@ public class DiffusionEpoque implements AlgoDiffusion {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws ExecutionException, InterruptedException {
         this.runnable = false;
         Timestamp tsTest = this.genImpl.getTs();
         if (this.ts == null){
@@ -41,24 +41,21 @@ public class DiffusionEpoque implements AlgoDiffusion {
         if (tsTest.after(this.ts) || tsTest.equals(this.ts)) {
             this.ts = tsTest;
             int x = 1;
-            for (ObservatorGeneratorAsync obs : this.genImpl.getObservers()) {
-                System.out.println("compteur : " + x);
-                x++;
-                this.runnable = true;
-                boolean finished = false;
-                Future<Boolean> future = obs.update(this.genImpl);
-                try {
-                    boolean test = true;
-                    finished = future.get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-                while (!finished) {
-                    System.out.println("NOT FINISHED");
-                }
-            }
+            Generator genCopy = (GeneratorImpl)((GeneratorImpl)this.genImpl).clone();
+            genCopy.getObservers().parallelStream().forEach(
+                    observatorGeneratorAsync -> {
+                        this.runnable = true;
+
+                        try {
+                            observatorGeneratorAsync.update().get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+            );
         }
         this.runnable = true;
     }

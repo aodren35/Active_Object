@@ -20,6 +20,7 @@ import javafx.util.converter.NumberStringConverter;
 import observer.Generator;
 import observer.GeneratorImpl;
 import observer.ObservatorGenerator;
+import observer.Observer;
 import strategy.AlgoDiffusion;
 import strategy.DiffusionAtomique;
 import strategy.DiffusionEpoque;
@@ -147,10 +148,7 @@ public class Controller implements Initializable{
         // this.afficheur1Value3.textProperty().bindBidirectional(this.afficheur3.getValueProperty(),new NumberStringConverter());
         // this.afficheur1Value4.textProperty().bindBidirectional(this.afficheur4.getValueProperty(),new NumberStringConverter());
 
-        this.afficheur1Value1.setText("test");
-        this.afficheur1Value2.setText("test");
-        this.afficheur1Value3.setText("test");
-        this.afficheur1Value4.setText("test");
+
 
 
 

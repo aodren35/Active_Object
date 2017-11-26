@@ -7,30 +7,41 @@ import observer.GeneratorImpl;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.ExecutionException;
 
 //Parrallelisme
 public class Clock {
 
-    private Timer timer ;
+    private Timer timer;
 
-    public void activation(Generator gi, int period){
+    public void activation(Generator gi, int period) {
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                if (gi.getAlgo().getRunnable()){
-                    new Thread(() -> {
-                        gi.change();
-                    }).start();
-                } else {
-                    return;
-                }
+                System.out.println("Appel de clock");
+
+                new Thread(() -> {
+                    if (gi.getAlgo().getRunnable()) {
+                        try {
+                            gi.change();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        return;
+                    }
+                }).start();
+
             }
         };
         this.timer = new Timer(period, taskPerformer);
         this.timer.setRepeats(true);
+        this.timer.setInitialDelay(0);
         this.timer.start();
     }
 
-    public void stop(){
+    public void stop() {
         this.timer.stop();
     }
 

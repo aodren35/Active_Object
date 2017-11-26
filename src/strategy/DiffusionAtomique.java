@@ -1,15 +1,14 @@
 package strategy;
 
+import javafx.concurrent.Task;
 import observer.*;
 import strategy.AlgoDiffusion;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
+import java.util.stream.Stream;
 
 public class DiffusionAtomique implements AlgoDiffusion {
 
@@ -28,33 +27,32 @@ public class DiffusionAtomique implements AlgoDiffusion {
 
 
     @Override
-    public void execute() {
+    public void execute() throws ExecutionException, InterruptedException {
         // List<Observer<Generator>> copyList = new ArrayList<>(this.genImpl.getObservers().size());
         // Collections.copy(copyList, this.genImpl.getObservers());
         this.runnable = false;
         int x = 1;
-        for(ObservatorGeneratorAsync obs:this.genImpl.getObservers()) {
-            System.out.println("compteur : "+ x);
-            x ++ ;
-            boolean finished = false;
-            Future<Boolean> future = obs.update(this.genImpl);
-            try {
-                 finished = future.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-            while (!finished) {
-                System.out.println("NOT FINISHED");
-            }
-        }
+        this.genImpl.getObservers().parallelStream().forEach(
+                observatorGeneratorAsync -> {
+                    try {
+                        observatorGeneratorAsync.update().get();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
         this.runnable = true;
     }
 
     @Override
     public boolean getRunnable() {
         return this.runnable;
+    }
+
+    private void process(){
+
     }
 
 }

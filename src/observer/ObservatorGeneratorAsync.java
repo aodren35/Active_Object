@@ -4,10 +4,10 @@ import observer.Generator;
 
 import java.util.concurrent.Future;
 
-public interface ObservatorGeneratorAsync extends Observer {
+public interface ObservatorGeneratorAsync {
 
 
-	public Future update(Generator subject);
+	Future<Void> update();
 
 	
 }
