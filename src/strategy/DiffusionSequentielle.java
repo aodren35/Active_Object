@@ -11,9 +11,9 @@ import java.util.concurrent.Future;
 public class DiffusionSequentielle implements AlgoDiffusion {
 
     // Séquentielle : C'est un lecteur/Rédacteur mais avec une copie du nombre. Les écritures sont permises dans l'originale pdt la lecture de la copie. Du coup les afficheurs peuvent faire 1 puis 3 puis 4 puis 7
-
-
-    private Generator genImpl;
+    //2 – Séquentielle
+    //Chaque lecteur/rédacteur possède une copie de sa valeur. Le rédacteur peut continuer d’avancer et les écritures sont permises dans l’original pendant les lecteurs lisent la valeur copiée.
+      private Generator genImpl;
 
     private boolean runnable = true;
 
