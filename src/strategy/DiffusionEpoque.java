@@ -5,8 +5,10 @@ import observer.GeneratorImpl;
 import observer.ObservatorGeneratorAsync;
 import strategy.AlgoDiffusion;
 
+import java.sql.Timestamp;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 public class DiffusionEpoque implements AlgoDiffusion {
 
@@ -18,33 +20,43 @@ public class DiffusionEpoque implements AlgoDiffusion {
 
     private boolean runnable = true;
 
+    private Timestamp ts = new Timestamp(System.currentTimeMillis());
+
 
     @Override
     public void configure(Generator generator) {
         this.genImpl = generator;
+        this.ts = new Timestamp(System.currentTimeMillis());
+        this.ts = this.genImpl.getTs();
     }
 
     @Override
     public void execute() {
         this.runnable = false;
-        Generator genCopy = this.genImpl;
-        int x = 1;
-        for(ObservatorGeneratorAsync obs:genCopy.getObservers()) {
-            System.out.println("compteur : "+ x);
-            x ++ ;
-            this.runnable = true;
-            boolean finished = false;
-            Future<Boolean> future = obs.update(genCopy);
-            try {
-                boolean test = true;
-                finished = future.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-            while (!finished) {
-                System.out.println("NOT FINISHED");
+        Timestamp tsTest = this.genImpl.getTs();
+        if (this.ts == null){
+            this.ts = tsTest;
+        }
+        if (tsTest.after(this.ts) || tsTest.equals(this.ts)) {
+            this.ts = tsTest;
+            int x = 1;
+            for (ObservatorGeneratorAsync obs : this.genImpl.getObservers()) {
+                System.out.println("compteur : " + x);
+                x++;
+                this.runnable = true;
+                boolean finished = false;
+                Future<Boolean> future = obs.update(this.genImpl);
+                try {
+                    boolean test = true;
+                    finished = future.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                while (!finished) {
+                    System.out.println("NOT FINISHED");
+                }
             }
         }
         this.runnable = true;

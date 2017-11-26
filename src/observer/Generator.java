@@ -3,6 +3,7 @@ package observer;
 import javafx.beans.property.IntegerProperty;
 import strategy.AlgoDiffusion;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface Generator  {
@@ -17,5 +18,6 @@ public interface Generator  {
 	void change();
 	IntegerProperty getValueProperty();
 	List<ObservatorGeneratorAsync> getObservers();
+	Timestamp getTs();
 
 }

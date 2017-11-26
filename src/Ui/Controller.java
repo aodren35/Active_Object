@@ -5,7 +5,10 @@ import Display.Display;
 import IHM.Clock;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -48,16 +51,16 @@ public class Controller implements Initializable{
     private BooleanProperty started = new SimpleBooleanProperty();
 
     @FXML
-    TextField afficheur1Value1 = new TextField();
+    Text afficheur1Value1 = new Text();
 
     @FXML
-    TextField afficheur1Value2 = new TextField();
+    Text afficheur1Value2 = new Text();
 
     @FXML
-    TextField afficheur1Value3 = new TextField();
+    Text afficheur1Value3 = new Text();
 
     @FXML
-    TextField afficheur1Value4 = new TextField();
+    Text afficheur1Value4 = new Text();
 
     @FXML
     RadioButton diffusionAtomique = new RadioButton();
@@ -139,10 +142,46 @@ public class Controller implements Initializable{
         System.out.println("LOL DE LOL" + this.afficheur1.getValueAfficheur());
 
 
-        this.afficheur1Value1.textProperty().bindBidirectional(this.afficheur1.getValueProperty(),new NumberStringConverter());
-        this.afficheur1Value2.textProperty().bindBidirectional(this.afficheur2.getValueProperty(),new NumberStringConverter());
-        this.afficheur1Value3.textProperty().bindBidirectional(this.afficheur3.getValueProperty(),new NumberStringConverter());
-        this.afficheur1Value4.textProperty().bindBidirectional(this.afficheur4.getValueProperty(),new NumberStringConverter());
+        // this.afficheur1Value1.textProperty().bindBidirectional(this.afficheur1.getValueProperty(),new NumberStringConverter());
+        // this.afficheur1Value2.textProperty().bindBidirectional(this.afficheur2.getValueProperty(),new NumberStringConverter());
+        // this.afficheur1Value3.textProperty().bindBidirectional(this.afficheur3.getValueProperty(),new NumberStringConverter());
+        // this.afficheur1Value4.textProperty().bindBidirectional(this.afficheur4.getValueProperty(),new NumberStringConverter());
+
+        this.afficheur1Value1.setText("test");
+        this.afficheur1Value2.setText("test");
+        this.afficheur1Value3.setText("test");
+        this.afficheur1Value4.setText("test");
+
+
+
+
+        this.afficheur1.getValueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                afficheur1Value1.textProperty().setValue("" + newValue);
+            }
+        });
+
+        this.afficheur2.getValueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                afficheur1Value2.textProperty().setValue("" + newValue);
+            }
+        });
+
+        this.afficheur3.getValueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                afficheur1Value3.textProperty().setValue("" + newValue);
+            }
+        });
+
+        this.afficheur4.getValueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                afficheur1Value4.textProperty().setValue("" + newValue);
+            }
+        });
 
         this.start.disableProperty().bindBidirectional(this.started);
         this.stop.disableProperty().bind(this.start.disabledProperty().not());

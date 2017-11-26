@@ -1,7 +1,9 @@
 package Display;
 
 import Canal.Canal;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.concurrent.Task;
 import observer.Generator;
 import observer.GeneratorAsync;
 import observer.ObservatorGenerator;
@@ -44,9 +46,19 @@ public class Display implements ObservatorGenerator {
             this.value = v;
             while (!available) {
             }
-            this.available = false;
-            this.valueProperty.set(v);
-            this.available = true;
+
+            Task<Integer> task = new Task<Integer>() {
+                @Override protected Integer call() throws Exception {
+                    valueProperty.set(v);
+                    available = true;
+                    return v;
+                }
+            };
+            if(this.available){
+                this.available = false;
+                Platform.runLater(task);
+            }
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

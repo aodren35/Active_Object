@@ -26,13 +26,14 @@ public class DiffusionSequentielle implements AlgoDiffusion {
     @Override
     public void execute() {
         this.runnable = false;
+        Generator genCopy = this.genImpl;
         int x = 1;
-        for(ObservatorGeneratorAsync obs:this.genImpl.getObservers()) {
+        for(ObservatorGeneratorAsync obs:genCopy.getObservers()) {
             System.out.println("compteur : "+ x);
             x ++ ;
             this.runnable = true;
             boolean finished = false;
-            Future<Boolean> future = obs.update(this.genImpl);
+            Future<Boolean> future = obs.update(genCopy);
             try {
                 boolean test = true;
                 finished = future.get();

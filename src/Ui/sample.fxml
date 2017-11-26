@@ -69,9 +69,9 @@
         <Button fx:id="stop" layoutX="480.0" layoutY="89.0" mnemonicParsing="false" onAction="#stop" text="Stop" />
         <Separator layoutX="290.0" layoutY="147.0" opacity="0.28" orientation="VERTICAL" prefHeight="200.0" style="-fx-background-color: grey;" />
         <Separator layoutX="193.0" layoutY="246.0" prefWidth="200.0" />
-        <TextField fx:id="afficheur1Value1" layoutX="221.0" layoutY="188.0" prefHeight="25.0" prefWidth="41.0" />
-        <TextField fx:id="afficheur1Value2" layoutX="316.0" layoutY="188.0" prefHeight="25.0" prefWidth="41.0" />
-        <TextField fx:id="afficheur1Value3" layoutX="221.0" layoutY="282.0" prefHeight="25.0" prefWidth="41.0" />
-        <TextField fx:id="afficheur1Value4" layoutX="316.0" layoutY="282.0" prefHeight="25.0" prefWidth="41.0" />
+        <Text fx:id="afficheur1Value1" layoutX="221.0" layoutY="188.0"  />
+        <Text fx:id="afficheur1Value2" layoutX="316.0" layoutY="188.0"  />
+        <Text fx:id="afficheur1Value3" layoutX="221.0" layoutY="282.0"  />
+        <Text fx:id="afficheur1Value4" layoutX="316.0" layoutY="282.0"  />
     </children>
 </Pane>
