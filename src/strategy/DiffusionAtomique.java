@@ -19,34 +19,25 @@ public class DiffusionAtomique implements AlgoDiffusion {
 
 	private int counter = 0;
 	private boolean runnable = true;
+	private List<ObservatorGeneratorAsync>copyCanaux;
 
     @Override
     public void configure(Generator generator) {
         this.genImpl = generator;
+        this.copyCanaux = new ArrayList<>();
     }
 
 
     @Override
     public void execute() throws ExecutionException, InterruptedException {
-        // List<Observer<Generator>> copyList = new ArrayList<>(this.genImpl.getObservers().size());
-        // Collections.copy(copyList, this.genImpl.getObservers());
-        this.runnable = false;
-        int x = 1;
-        this.genImpl.getObservers().parallelStream().forEach(
-                observatorGeneratorAsync -> {
-
-                        Future<Void>updateFuture = observatorGeneratorAsync.update();
-                        while(!updateFuture.isDone()){
-                            try {
-                                Thread.sleep(300);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                }
-        );
-        this.runnable = true;
+        this.runnable = this.copyCanaux.isEmpty();
+        System.out.println("Appel execute "+ this.runnable);
+        if (this.runnable) {
+            System.out.println("Appel de change");
+            this.genImpl.change();
+            this.copyCanaux = (ArrayList) new ArrayList<ObservatorGeneratorAsync>(this.genImpl.getObservers());
+            this.process();
+        }
     }
 
     @Override
@@ -54,8 +45,20 @@ public class DiffusionAtomique implements AlgoDiffusion {
         return this.runnable;
     }
 
-    private void process(){
+    @Override
+    public void dettach(ObservatorGeneratorAsync obs) {
+        this.copyCanaux.remove(obs);
+        System.out.println(this.copyCanaux);
+    }
 
+    private void process(){
+        this.runnable = false;
+        this.genImpl.getObservers().parallelStream().forEach(
+                observatorGeneratorAsync -> {
+                    Future<Void>updateFuture = observatorGeneratorAsync.update();
+                }
+        );
+        this.runnable = true;
     }
 
 }

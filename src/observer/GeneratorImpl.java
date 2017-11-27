@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class GeneratorImpl implements Generator, Cloneable{
+public class GeneratorImpl implements Generator{
 
-	private int v;
+	private Value value;
 
-	private Timestamp ts;
+	private Value valueCopy;
 
 	private AlgoDiffusion algo;
 
@@ -21,12 +21,8 @@ public class GeneratorImpl implements Generator, Cloneable{
 
 
 	public GeneratorImpl(int v) {
-		this.v = v;
+		this.value = new Value(v);
 		this.observers = new ArrayList<>();
-	}
-
-	public Timestamp getTs() {
-		return ts;
 	}
 
 	public void setAlgo(AlgoDiffusion algo) {
@@ -46,27 +42,44 @@ public class GeneratorImpl implements Generator, Cloneable{
 	}
 
 	@Override
-	public int getValue() {
-		return v;
+	public Value getValue(ObservatorGeneratorAsync obs) {
+		String algoClasse = this.algo.getClass().getCanonicalName();
+		if (algoClasse.equals("strategy.DiffusionAtomique")){
+			this.algo.dettach(obs);
+			return this.value;
+		} else if (algoClasse.equals("strategy.DiffusionSequentielle")) {
+			return this.valueCopy;
+		} else if (algoClasse.equals("strategy.DiffusionEpoque")) {
+			return this.value;
+		} else {
+			return null;
+		}
 	}
 
-	@Override
+
 	public void setValue(int v){
-		this.v = v;
+		return;
 	}
 
 	public void change() throws ExecutionException, InterruptedException {
-			this.v++;
-			this.ts = new Timestamp(System.currentTimeMillis());
-			System.out.println(this);
-			this.algo.execute();
+		String algoClasse = this.algo.getClass().getCanonicalName();
+		if (algoClasse.equals("strategy.DiffusionAtomique")){
+			this.value.incrementV();
+			System.out.println(this.value.getValueProperty());
+		} else if (algoClasse.equals("strategy.DiffusionSequentielle")) {
+
+		} else if (algoClasse.equals("strategy.DiffusionEpoque")) {
+
+		} else {
+		}
+
 	}
 
 	@Override
 	public String toString() {
 		return "GeneratorImpl{" +
-				"v=" + v +
-				", ts=" + ts +
+				"v=" + value.getValueProperty() +
+				", ts=" + value.getTs() +
 				'}';
 	}
 
@@ -78,23 +91,11 @@ public class GeneratorImpl implements Generator, Cloneable{
 		this.algo = algo;
 	}
 
-	public IntegerProperty getValueProperty() {
-		IntegerProperty result = new SimpleIntegerProperty();
-		result.setValue(this.v);
-		return result;
-	}
 
 	public List<ObservatorGeneratorAsync> getObservers() {
 		return observers;
 	}
 
-	public GeneratorImpl clone() {
-		Object o = null;
-		GeneratorImpl clone = new GeneratorImpl(0);
-		clone.observers = new ArrayList<>();
-		clone.v = v;
-		clone.ts = ts;
-		return clone;
-	}
+
 
 }

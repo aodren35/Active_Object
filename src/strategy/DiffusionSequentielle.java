@@ -28,7 +28,7 @@ public class DiffusionSequentielle implements AlgoDiffusion {
 
     @Override
     public void execute() throws ExecutionException, InterruptedException {
-        this.runnable = false;
+       /* this.runnable = false;
 
         System.out.println("EXECUTE" + this.genImpl.getValue());
         List<ObservatorGeneratorAsync> copyList = new ArrayList<>(this.genImpl.getObservers().size());
@@ -57,12 +57,33 @@ public class DiffusionSequentielle implements AlgoDiffusion {
 
                 }
         );
+        this.runnable = true;*/
+        this.runnable = false;
+        this.genImpl.getObservers().parallelStream().forEach(
+                observatorGeneratorAsync -> {
+
+                    Future<Void>updateFuture = observatorGeneratorAsync.update();
+                    while(!updateFuture.isDone()){
+                        try {
+                            Thread.sleep(300);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+        );
         this.runnable = true;
     }
 
     @Override
     public boolean getRunnable() {
         return this.runnable;
+    }
+
+    @Override
+    public void dettach(ObservatorGeneratorAsync obs) {
+
     }
 
 }

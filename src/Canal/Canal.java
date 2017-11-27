@@ -42,7 +42,7 @@ public class Canal implements ObservatorGeneratorAsync, GeneratorAsync {
 
 
 	@Override
-	public Future<Integer> getValue() {
+	public Future<Value> getValue() {
 		// GetValue
 		GetValue gv = new GetValue(this.generator, this);
 		// this.completionGetValue.submit(gv);

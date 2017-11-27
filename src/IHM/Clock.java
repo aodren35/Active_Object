@@ -17,20 +17,17 @@ public class Clock {
     public void activation(Generator gi, int period) {
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                System.out.println("Appel de clock");
 
                 new Thread(() -> {
-                    if (gi.getAlgo().getRunnable()) {
-                        try {
-                            gi.change();
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        return;
+                    System.out.println("Appel de clock");
+                    try {
+                        gi.getAlgo().execute();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
+
                 }).start();
 
             }

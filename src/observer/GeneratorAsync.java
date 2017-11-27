@@ -8,6 +8,6 @@ public interface GeneratorAsync {
 
 	 void attach (ObservatorGenerator obs);
 	 void detach (ObservatorGenerator obs);
-	 Future<Integer> getValue();
+	 Future<Value> getValue();
 
 }

@@ -22,57 +22,24 @@ public class DiffusionEpoque implements AlgoDiffusion {
 
     private boolean runnable = true;
 
-    private Timestamp ts = new Timestamp(System.currentTimeMillis());
-
-
     @Override
     public void configure(Generator generator) {
         this.genImpl = generator;
-        this.ts = new Timestamp(System.currentTimeMillis());
-        this.ts = this.genImpl.getTs();
     }
 
     @Override
     public void execute() throws ExecutionException, InterruptedException {
-        this.runnable = false;
-        Timestamp tsTest = this.genImpl.getTs();
-         List<ObservatorGeneratorAsync> copyList = new ArrayList<>(this.genImpl.getObservers().size());
-         for(int i = 0; i<this.genImpl.getObservers().size(); i++){
-             copyList.add(null);
-         }
-        Collections.copy(copyList, this.genImpl.getObservers());
-        if (this.ts == null){
-            this.ts = tsTest;
-        }
-        if (tsTest.after(this.ts) || tsTest.equals(this.ts)) {
-            this.ts = tsTest;
-            int x = 1;
-            Generator genCopy = (GeneratorImpl)((GeneratorImpl)this.genImpl).clone();
-            copyList.parallelStream().forEach(
-                    observatorGeneratorAsync -> {
-                        this.runnable = true;
 
-                            observatorGeneratorAsync.setGenerator(genCopy);
-                            Future<Void>updateFuture = observatorGeneratorAsync.update();
-                            while(!updateFuture.isDone()){
-                                try {
-                                    Thread.sleep(300);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            // updateFuture.get();
-
-
-                    }
-            );
-        }
-        this.runnable = true;
     }
 
     @Override
     public boolean getRunnable() {
         return this.runnable;
+    }
+
+    @Override
+    public void dettach(ObservatorGeneratorAsync obs) {
+
     }
 
 }

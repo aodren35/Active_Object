@@ -2,13 +2,12 @@ package Display;
 
 import Canal.Canal;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.concurrent.Task;
-import observer.Generator;
-import observer.GeneratorAsync;
-import observer.ObservatorGenerator;
-import observer.Subject;
+import observer.*;
 
+import java.sql.Timestamp;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -16,51 +15,47 @@ public class Display implements ObservatorGenerator {
 
 	private Canal canalGetValue;
 
-	private int value = 0;
+	private Value value;
 
-	private SimpleIntegerProperty valueProperty = new SimpleIntegerProperty();
 
 	private boolean available = true;
 
-    public Display(Canal canalGetValue) {
-
+    public Display(Canal canalGetValue) throws ExecutionException, InterruptedException {
         this.canalGetValue = canalGetValue;
+        this.value = new Value(0);
     }
 
-    //Pour récupérer valeur javaFX algos
-    public int getValueAfficheur() {
-        return value;
+    public IntegerProperty getValueProperty() {
+        return this.value.valuePropertyProperty();
     }
 
-    public SimpleIntegerProperty getValueProperty() {
-        return this.valueProperty;
+    public Value getValue(){
+        return this.value;
     }
 
-    public void setCanalGetValue(Canal canalGetValue) {
-        this.canalGetValue = canalGetValue;
-    }
-
-    //Generator = canal => Héritage !!!
     public void update (GeneratorAsync generatorAsync){
         try {
-            Future<Integer> newValue =  generatorAsync.getValue();
+            Future<Value> newValue =  generatorAsync.getValue();
             while  (!newValue.isDone()){
-
+                Thread.sleep(300);
             }
-            int v = generatorAsync.getValue().get();
-            System.out.println("Display avant " + this.value + " Display après "+ v);
-            this.value = v;
+            //this.value.set(newValue.get());
+            //System.out.println("Changement dans display " +newValue.get().getValueProperty());
+            // this.valueProperty.set(this.value.getV());
 
+            //this.valueProperty.set(1000);
             while (!available) {
             }
 
+            Value valueFinale = newValue.get();
             Task<Integer> task = new Task<Integer>() {
                 @Override protected Integer call() throws Exception {
-                    valueProperty.set(v);
+                    value.set(valueFinale);
                     available = true;
-                    return v;
+                    return 1;
                 }
             };
+
             if(this.available){
                 this.available = false;
                 Platform.runLater(task);
@@ -71,8 +66,6 @@ public class Display implements ObservatorGenerator {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        //Appel automatiquement toString
-        // System.out.println(this);
     }
 
     @Override
@@ -80,6 +73,10 @@ public class Display implements ObservatorGenerator {
         return "Display{" +
                 "value=" + value +
                 '}';
+    }
+
+    public Timestamp getTs(){
+        return this.value.getTs();
     }
 
 }

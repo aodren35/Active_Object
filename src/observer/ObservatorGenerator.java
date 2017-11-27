@@ -3,7 +3,10 @@ package observer;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+
 public interface ObservatorGenerator extends Observer<GeneratorAsync> {
-    public int getValueAfficheur();
-    SimpleIntegerProperty getValueProperty();
+    Value getValue();
+    Timestamp getTs();
 }

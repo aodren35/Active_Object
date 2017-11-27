@@ -19,7 +19,7 @@ public class Update implements Callable<Void> {
 
 	@Override
 	public Void call() {
-		// System.out.println("Update call");
+		System.out.println("Update call");
 		this.display.update(this.canal);
 		return null;
 	}

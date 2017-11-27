@@ -29,6 +29,7 @@ import strategy.DiffusionSequentielle;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 
 public class Controller implements Initializable{
 
@@ -78,6 +79,8 @@ public class Controller implements Initializable{
     @FXML
     Button stop = new Button();
 
+    public Controller() throws ExecutionException, InterruptedException {
+    }
 
 
     public void start() {
@@ -140,43 +143,49 @@ public class Controller implements Initializable{
         this.generator.attach(this.canal2);
         this.generator.attach(this.canal3);
         this.generator.attach(this.canal4);
-        System.out.println("LOL DE LOL" + this.afficheur1.getValueAfficheur());
+        System.out.println("LOL DE LOL" + this.afficheur1.getValue().valuePropertyProperty());
 
 
-        // this.afficheur1Value1.textProperty().bindBidirectional(this.afficheur1.getValueProperty(),new NumberStringConverter());
-        // this.afficheur1Value2.textProperty().bindBidirectional(this.afficheur2.getValueProperty(),new NumberStringConverter());
-        // this.afficheur1Value3.textProperty().bindBidirectional(this.afficheur3.getValueProperty(),new NumberStringConverter());
-        // this.afficheur1Value4.textProperty().bindBidirectional(this.afficheur4.getValueProperty(),new NumberStringConverter());
+         //this.afficheur1Value1.textProperty().bindBidirectional(this.afficheur1.getValueProperty(),new NumberStringConverter());
+         //this.afficheur1Value2.textProperty().bindBidirectional(this.afficheur2.getValueProperty(),new NumberStringConverter());
+         //this.afficheur1Value3.textProperty().bindBidirectional(this.afficheur3.getValueProperty(),new NumberStringConverter());
+         //this.afficheur1Value4.textProperty().bindBidirectional(this.afficheur4.getValueProperty(),new NumberStringConverter());
+
+
+        //this.afficheur1Value1.textProperty().setValue(this.afficheur1.getValueProperty().get() + "");
 
 
 
-
-
-
-        this.afficheur1.getValueProperty().addListener(new ChangeListener<Number>() {
+        this.afficheur1.getValue().valuePropertyProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                System.out.println("VALUE  CHANGEEEEEEEEEEEEEEEE");
+
                 afficheur1Value1.textProperty().setValue("" + newValue);
             }
         });
 
-        this.afficheur2.getValueProperty().addListener(new ChangeListener<Number>() {
+        this.afficheur2.getValue().valuePropertyProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                System.out.println("VALUE  CHANGEEEEEEEEEEEEEEEE");
                 afficheur1Value2.textProperty().setValue("" + newValue);
             }
         });
 
-        this.afficheur3.getValueProperty().addListener(new ChangeListener<Number>() {
+        this.afficheur3.getValue().valuePropertyProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                System.out.println("VALUE  CHANGEEEEEEEEEEEEEEEE");
+
                 afficheur1Value3.textProperty().setValue("" + newValue);
             }
         });
 
-        this.afficheur4.getValueProperty().addListener(new ChangeListener<Number>() {
+        this.afficheur4.getValue().valuePropertyProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                System.out.println("VALUE  CHANGEEEEEEEEEEEEEEEE");
                 afficheur1Value4.textProperty().setValue("" + newValue);
             }
         });

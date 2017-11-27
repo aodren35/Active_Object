@@ -3,10 +3,11 @@ package activeobject;
 import observer.Generator;
 import observer.GeneratorImpl;
 import Canal.Canal;
+import observer.Value;
 
 import java.util.concurrent.Callable;
 
-public class GetValue implements Callable<Integer> {
+public class GetValue implements Callable<Value> {
 
 	private Generator generator;
 	private Canal canal;
@@ -17,10 +18,10 @@ public class GetValue implements Callable<Integer> {
 	}
 
 	@Override
-	public Integer call() {
-		// System.out.println("Get Value call");
+	public Value call() {
+		System.out.println("Get Value call");
 
-		return this.generator.getValue();
+		return this.generator.getValue(this.canal);
 	}
 
 }
