@@ -29,12 +29,16 @@ public class DiffusionEpoque implements AlgoDiffusion {
     @Override
     public void configure(Generator generator) {
         this.genImpl = generator;
+        this.copyCanaux = new ArrayList<>();
     }
 
     @Override
     public void execute() throws ExecutionException, InterruptedException {
-        this.copyCanaux = (ArrayList) new ArrayList<ObservatorGeneratorAsync>(this.genImpl.getObservers());
-        this.process();
+        this.runnable = this.copyIsEmpty();
+        if (this.runnable) {
+            this.copyCanaux = (ArrayList) new ArrayList<ObservatorGeneratorAsync>(this.genImpl.getObservers());
+            this.process();
+        }
     }
 
     @Override
@@ -49,11 +53,12 @@ public class DiffusionEpoque implements AlgoDiffusion {
 
     @Override
     public boolean copyIsEmpty() {
-        return false;
+        return this.copyCanaux.isEmpty();
     }
 
     @Override
     public Value getValue(ObservatorGeneratorAsync obs) {
+        this.dettach(obs);
         Value value = this.genImpl.getValue();
         if (this.valueTest.isNull()){
             this.valueTest.set(value);
@@ -61,8 +66,11 @@ public class DiffusionEpoque implements AlgoDiffusion {
         } else {
             if (value.getTs().after(this.valueTest.getTs())){
                 this.valueTest.set(value);
+
+                System.out.println("RETURN VALUE TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
                 return value;
             } else {
+                System.out.println("RETURN VALUE TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
                 return this.valueTest;
             }
         }
