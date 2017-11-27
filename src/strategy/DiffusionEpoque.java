@@ -29,6 +29,7 @@ public class DiffusionEpoque implements AlgoDiffusion {
     @Override
     public void configure(Generator generator) {
         this.genImpl = generator;
+        this.valueTest.set(this.genImpl.getValue());
         this.copyCanaux = new ArrayList<>();
     }
 
@@ -64,13 +65,13 @@ public class DiffusionEpoque implements AlgoDiffusion {
             this.valueTest.set(value);
             return value;
         } else {
+            System.out.println("VALUE GENO " + value.getTs() + " VALUE TEST "+ this.valueTest.getTs());
             if (value.getTs().after(this.valueTest.getTs())){
                 this.valueTest.set(value);
 
-                System.out.println("RETURN VALUE TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+
                 return value;
             } else {
-                System.out.println("RETURN VALUE TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
                 return this.valueTest;
             }
         }

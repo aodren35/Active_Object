@@ -12,7 +12,7 @@ public class Value {
 
     public Value(){
         this.valueProperty = null;
-        this.ts = new Timestamp(System.currentTimeMillis());
+        this.ts = new Timestamp(0);
     }
 
     public Value(int v){

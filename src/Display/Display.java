@@ -51,6 +51,7 @@ public class Display implements ObservatorGenerator {
             Task<Integer> task = new Task<Integer>() {
                 @Override protected Integer call() throws Exception {
                     value.set(valueFinale);
+                    System.out.println("Value changé dans afficheur "+ value.getValueProperty());
                     available = true;
                     return 1;
                 }

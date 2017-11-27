@@ -101,23 +101,26 @@ public class Controller implements Initializable{
             this.stop();
             // this.generator.setValue(0);
         }
-
         if(event.getSource().equals(this.diffusionAtomique)) {
             this.algo = new DiffusionAtomique();
             this.algo.configure(this.generator);
+            this.generator.setIncrementable(true);
             this.sequentiel.selectedProperty().set(false);
             this.epoque.selectedProperty().set(false);
         } else if (event.getSource().equals(this.sequentiel)){
             this.algo = new DiffusionSequentielle();
             this.algo.configure(this.generator);
+            this.generator.setIncrementable(true);
             this.diffusionAtomique.selectedProperty().set(false);
             this.epoque.selectedProperty().set(false);
         } else {
             this.algo = new DiffusionEpoque();
             this.algo.configure(this.generator);
+            this.generator.setIncrementable(true);
             this.diffusionAtomique.selectedProperty().set(false);
             this.sequentiel.selectedProperty().set(false);
         }
+
     }
 
     @Override
