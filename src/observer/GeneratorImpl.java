@@ -24,7 +24,9 @@ public class GeneratorImpl implements Generator{
 
 	public GeneratorImpl(int v) {
 		this.value = new Value(v);
+		this.valueCopy = new Value();
 		this.observers = new ArrayList<>();
+		this.incrementable = true;
 	}
 
 	public void setAlgo(AlgoDiffusion algo) {
@@ -46,6 +48,17 @@ public class GeneratorImpl implements Generator{
 	@Override
 	public Value getValue() {
 		return this.value;
+	}
+
+	@Override
+	public Value getCopyValue() {
+		return this.valueCopy;
+	}
+
+	@Override
+	public void makeCopy() {
+		System.out.println("MAKE COPY !!!!!!!!!!!" + this.value.getValueProperty());
+		this.valueCopy.set(this.value);
 	}
 
 	public void setValue(int v){

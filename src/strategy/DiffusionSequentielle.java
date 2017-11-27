@@ -25,6 +25,7 @@ public class DiffusionSequentielle implements AlgoDiffusion {
     private int counter = 0;
     private boolean runnable = true;
     private List<ObservatorGeneratorAsync>copyCanaux;
+    private boolean getCopy = false;
 
     @Override
     public void configure(Generator generator) {
@@ -35,11 +36,9 @@ public class DiffusionSequentielle implements AlgoDiffusion {
 
     @Override
     public void execute() throws ExecutionException, InterruptedException {
-        this.runnable = this.copyCanaux.isEmpty();
-        System.out.println("Appel execute "+ this.runnable);
-        this.genImpl.change();
+        this.runnable = this.copyIsEmpty();
         if (this.runnable) {
-            System.out.println("Appel de change");
+            this.genImpl.makeCopy();
             this.copyCanaux = (ArrayList) new ArrayList<ObservatorGeneratorAsync>(this.genImpl.getObservers());
             this.process();
         }
@@ -63,17 +62,16 @@ public class DiffusionSequentielle implements AlgoDiffusion {
 
     @Override
     public Value getValue(ObservatorGeneratorAsync obs) {
-        return null;
+        this.dettach(obs);
+        return this.genImpl.getCopyValue();
     }
 
     private void process(){
-        this.runnable = false;
         this.genImpl.getObservers().parallelStream().forEach(
                 observatorGeneratorAsync -> {
                     Future<Void>updateFuture = observatorGeneratorAsync.update();
                 }
         );
-        this.runnable = true;
     }
 
 }

@@ -10,6 +10,11 @@ public class Value {
     private IntegerProperty valueProperty ;
 
 
+    public Value(){
+        this.valueProperty = null;
+        this.ts = new Timestamp(System.currentTimeMillis());
+    }
+
     public Value(int v){
         this.valueProperty = new SimpleIntegerProperty(v);
         this.ts = new Timestamp(System.currentTimeMillis());
@@ -41,6 +46,14 @@ public class Value {
     }
     public void set(Value valuecopy) {
         this.ts = valuecopy.getTs();
-        this.valueProperty.set(valuecopy.getValueProperty());
+        if (this.valueProperty == null){
+            this.valueProperty = new SimpleIntegerProperty(valuecopy.getValueProperty());
+        } else {
+            this.valueProperty.set(valuecopy.getValueProperty());
+        }
+    }
+
+    public boolean isNull(){
+        return this.valueProperty == null;
     }
 }

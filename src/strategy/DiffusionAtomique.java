@@ -30,13 +30,16 @@ public class DiffusionAtomique implements AlgoDiffusion {
 
     @Override
     public void execute() throws ExecutionException, InterruptedException {
-        this.runnable = this.copyCanaux.isEmpty();
+        this.runnable = this.genImpl.isIncrementable();
         System.out.println("Appel execute "+ this.runnable);
         if (this.runnable) {
-            System.out.println("Appel de change");
-            this.genImpl.setIncrementable(true);
+            this.genImpl.setIncrementable(false);
             this.copyCanaux = (ArrayList) new ArrayList<ObservatorGeneratorAsync>(this.genImpl.getObservers());
             this.process();
+        } else {
+            if (this.copyCanaux.isEmpty()){
+                this.genImpl.setIncrementable(true);
+            }
         }
     }
 
@@ -48,7 +51,6 @@ public class DiffusionAtomique implements AlgoDiffusion {
     @Override
     public void dettach(ObservatorGeneratorAsync obs) {
         this.copyCanaux.remove(obs);
-        System.out.println(this.copyCanaux);
     }
 
     @Override

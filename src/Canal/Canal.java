@@ -23,7 +23,7 @@ public class Canal implements ObservatorGeneratorAsync, GeneratorAsync {
 		this.generator = null;
 		//encapsulation afficheur
 		this.display = null;
-		this.sES = Executors.newScheduledThreadPool(10);
+		this.sES = Executors.newScheduledThreadPool(50);
 		this.completionGetValue = new ExecutorCompletionService<Integer>(this.sES);
 		this.completionUpdate = new ExecutorCompletionService<Boolean>(this.sES);
 	}

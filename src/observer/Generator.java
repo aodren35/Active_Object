@@ -13,6 +13,8 @@ public interface Generator  {
 	void attach(ObservatorGeneratorAsync obs);
 	void detach(ObservatorGeneratorAsync obs);
 	Value getValue();
+	Value getCopyValue();
+	void makeCopy();
 	AlgoDiffusion getAlgo();
 	void setAlgoDiffusion(AlgoDiffusion algo);
 	void change() throws ExecutionException, InterruptedException;
