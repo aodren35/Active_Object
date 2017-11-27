@@ -3,6 +3,7 @@ package strategy;
 import observer.Generator;
 import observer.GeneratorImpl;
 import observer.ObservatorGeneratorAsync;
+import observer.Value;
 import strategy.AlgoDiffusion;
 
 import java.util.ArrayList;
@@ -16,64 +17,32 @@ public class DiffusionSequentielle implements AlgoDiffusion {
     // Séquentielle : C'est un lecteur/Rédacteur mais avec une copie du nombre. Les écritures sont permises dans l'originale pdt la lecture de la copie. Du coup les afficheurs peuvent faire 1 puis 3 puis 4 puis 7
     //2 – Séquentielle
     //Chaque lecteur/rédacteur possède une copie de sa valeur. Le rédacteur peut continuer d’avancer et les écritures sont permises dans l’original pendant les lecteurs lisent la valeur copiée.
-      private Generator genImpl;
+    //exclusion mutuelle entre les n lecteurs et les n r�dacteurs, une �criture suivie de n lectures
 
+
+    private Generator genImpl;
+
+    private int counter = 0;
     private boolean runnable = true;
-
+    private List<ObservatorGeneratorAsync>copyCanaux;
 
     @Override
     public void configure(Generator generator) {
         this.genImpl = generator;
+        this.copyCanaux = new ArrayList<>();
     }
+
 
     @Override
     public void execute() throws ExecutionException, InterruptedException {
-       /* this.runnable = false;
-
-        System.out.println("EXECUTE" + this.genImpl.getValue());
-        List<ObservatorGeneratorAsync> copyList = new ArrayList<>(this.genImpl.getObservers().size());
-        for(int i = 0; i<this.genImpl.getObservers().size(); i++){
-            copyList.add(null);
+        this.runnable = this.copyCanaux.isEmpty();
+        System.out.println("Appel execute "+ this.runnable);
+        this.genImpl.change();
+        if (this.runnable) {
+            System.out.println("Appel de change");
+            this.copyCanaux = (ArrayList) new ArrayList<ObservatorGeneratorAsync>(this.genImpl.getObservers());
+            this.process();
         }
-        Collections.copy(copyList, this.genImpl.getObservers());
-        Generator genCopy = (GeneratorImpl)((GeneratorImpl)this.genImpl).clone();
-        int x = 1;
-
-
-        copyList.parallelStream().forEach(
-                observatorGeneratorAsync -> {
-                    this.runnable = true;
-
-                        observatorGeneratorAsync.setGenerator(genCopy);
-                        Future<Void>updateFuture = observatorGeneratorAsync.update();
-                        while(!updateFuture.isDone()){
-                            try {
-                                Thread.sleep(300);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                       //  updateFuture.get();
-
-                }
-        );
-        this.runnable = true;*/
-        this.runnable = false;
-        this.genImpl.getObservers().parallelStream().forEach(
-                observatorGeneratorAsync -> {
-
-                    Future<Void>updateFuture = observatorGeneratorAsync.update();
-                    while(!updateFuture.isDone()){
-                        try {
-                            Thread.sleep(300);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                }
-        );
-        this.runnable = true;
     }
 
     @Override
@@ -83,7 +52,28 @@ public class DiffusionSequentielle implements AlgoDiffusion {
 
     @Override
     public void dettach(ObservatorGeneratorAsync obs) {
+        this.copyCanaux.remove(obs);
+        System.out.println(this.copyCanaux);
+    }
 
+    @Override
+    public boolean copyIsEmpty() {
+        return this.copyCanaux.isEmpty();
+    }
+
+    @Override
+    public Value getValue(ObservatorGeneratorAsync obs) {
+        return null;
+    }
+
+    private void process(){
+        this.runnable = false;
+        this.genImpl.getObservers().parallelStream().forEach(
+                observatorGeneratorAsync -> {
+                    Future<Void>updateFuture = observatorGeneratorAsync.update();
+                }
+        );
+        this.runnable = true;
     }
 
 }

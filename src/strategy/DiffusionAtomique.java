@@ -34,7 +34,7 @@ public class DiffusionAtomique implements AlgoDiffusion {
         System.out.println("Appel execute "+ this.runnable);
         if (this.runnable) {
             System.out.println("Appel de change");
-            this.genImpl.change();
+            this.genImpl.setIncrementable(true);
             this.copyCanaux = (ArrayList) new ArrayList<ObservatorGeneratorAsync>(this.genImpl.getObservers());
             this.process();
         }
@@ -51,14 +51,23 @@ public class DiffusionAtomique implements AlgoDiffusion {
         System.out.println(this.copyCanaux);
     }
 
+    @Override
+    public boolean copyIsEmpty() {
+        return false;
+    }
+
+    @Override
+    public Value getValue(ObservatorGeneratorAsync obs) {
+        this.dettach(obs);
+        return this.genImpl.getValue();
+    }
+
     private void process(){
-        this.runnable = false;
         this.genImpl.getObservers().parallelStream().forEach(
                 observatorGeneratorAsync -> {
                     Future<Void>updateFuture = observatorGeneratorAsync.update();
                 }
         );
-        this.runnable = true;
     }
 
 }

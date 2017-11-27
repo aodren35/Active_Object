@@ -12,10 +12,12 @@ public interface Generator  {
 
 	void attach(ObservatorGeneratorAsync obs);
 	void detach(ObservatorGeneratorAsync obs);
-	Value getValue(ObservatorGeneratorAsync obs);
+	Value getValue();
 	AlgoDiffusion getAlgo();
 	void setAlgoDiffusion(AlgoDiffusion algo);
 	void change() throws ExecutionException, InterruptedException;
 	List<ObservatorGeneratorAsync> getObservers();
+	boolean isIncrementable();
+	void setIncrementable(boolean b);
 
 }

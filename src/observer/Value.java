@@ -15,6 +15,11 @@ public class Value {
         this.ts = new Timestamp(System.currentTimeMillis());
     }
 
+    public Value(Value v){
+        this.valueProperty = new SimpleIntegerProperty(v.getValueProperty());
+        this.ts = new Timestamp(v.getTs().getTime());
+    }
+
     public int getValueProperty() {
         return valueProperty.get();
     }

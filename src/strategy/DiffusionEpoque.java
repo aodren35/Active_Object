@@ -42,4 +42,15 @@ public class DiffusionEpoque implements AlgoDiffusion {
 
     }
 
+    @Override
+    public boolean copyIsEmpty() {
+        return false;
+    }
+
+    @Override
+    public Value getValue(ObservatorGeneratorAsync obs) {
+        return null;
+    }
+
+
 }

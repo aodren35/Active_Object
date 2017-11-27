@@ -19,6 +19,8 @@ public class GeneratorImpl implements Generator{
 
 	private List<ObservatorGeneratorAsync> observers;
 
+	private boolean incrementable;
+
 
 	public GeneratorImpl(int v) {
 		this.value = new Value(v);
@@ -42,37 +44,19 @@ public class GeneratorImpl implements Generator{
 	}
 
 	@Override
-	public Value getValue(ObservatorGeneratorAsync obs) {
-		String algoClasse = this.algo.getClass().getCanonicalName();
-		if (algoClasse.equals("strategy.DiffusionAtomique")){
-			this.algo.dettach(obs);
-			return this.value;
-		} else if (algoClasse.equals("strategy.DiffusionSequentielle")) {
-			return this.valueCopy;
-		} else if (algoClasse.equals("strategy.DiffusionEpoque")) {
-			return this.value;
-		} else {
-			return null;
-		}
+	public Value getValue() {
+		return this.value;
 	}
-
 
 	public void setValue(int v){
 		return;
 	}
 
 	public void change() throws ExecutionException, InterruptedException {
-		String algoClasse = this.algo.getClass().getCanonicalName();
-		if (algoClasse.equals("strategy.DiffusionAtomique")){
+		if (this.incrementable) {
 			this.value.incrementV();
-			System.out.println(this.value.getValueProperty());
-		} else if (algoClasse.equals("strategy.DiffusionSequentielle")) {
-
-		} else if (algoClasse.equals("strategy.DiffusionEpoque")) {
-
-		} else {
 		}
-
+		this.algo.execute();
 	}
 
 	@Override
@@ -96,6 +80,11 @@ public class GeneratorImpl implements Generator{
 		return observers;
 	}
 
+	public boolean isIncrementable() {
+		return incrementable;
+	}
 
-
+	public void setIncrementable(boolean b) {
+		this.incrementable = b;
+	}
 }

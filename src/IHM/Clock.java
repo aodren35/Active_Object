@@ -21,7 +21,7 @@ public class Clock {
                 new Thread(() -> {
                     System.out.println("Appel de clock");
                     try {
-                        gi.getAlgo().execute();
+                        gi.change();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {

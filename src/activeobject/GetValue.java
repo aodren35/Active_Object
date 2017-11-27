@@ -21,7 +21,7 @@ public class GetValue implements Callable<Value> {
 	public Value call() {
 		System.out.println("Get Value call");
 
-		return this.generator.getValue(this.canal);
+		return this.generator.getAlgo().getValue(this.canal);
 	}
 
 }
