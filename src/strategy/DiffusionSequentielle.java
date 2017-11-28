@@ -38,9 +38,14 @@ public class DiffusionSequentielle implements AlgoDiffusion {
     public void execute() throws ExecutionException, InterruptedException {
         this.runnable = this.copyIsEmpty();
         if (this.runnable) {
-            this.genImpl.makeCopy();
-            this.copyCanaux = (ArrayList) new ArrayList<ObservatorGeneratorAsync>(this.genImpl.getObservers());
-            this.process();
+            //!! bug make copy parfois fait avant le dernier getvalue
+            boolean copied = this.genImpl.makeCopy();
+            if (copied) {
+                this.copyCanaux = (ArrayList) new ArrayList<ObservatorGeneratorAsync>(this.genImpl.getObservers());
+                this.process();
+            } else {
+                this.execute();
+            }
         }
     }
 
@@ -52,7 +57,7 @@ public class DiffusionSequentielle implements AlgoDiffusion {
     @Override
     public void dettach(ObservatorGeneratorAsync obs) {
         this.copyCanaux.remove(obs);
-        System.out.println(this.copyCanaux);
+        //System.out.println(this.copyCanaux);
     }
 
     @Override

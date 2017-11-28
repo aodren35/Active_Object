@@ -21,12 +21,15 @@ public class GeneratorImpl implements Generator{
 
 	private boolean incrementable;
 
+	private boolean copiable;
+
 
 	public GeneratorImpl(int v) {
 		this.value = new Value(v);
 		this.valueCopy = new Value();
 		this.observers = new ArrayList<>();
 		this.incrementable = true;
+		this.copiable = true;
 	}
 
 	public void setAlgo(AlgoDiffusion algo) {
@@ -56,9 +59,13 @@ public class GeneratorImpl implements Generator{
 	}
 
 	@Override
-	public void makeCopy() {
-		System.out.println("MAKE COPY !!!!!!!!!!!" + this.value.getValueProperty());
-		this.valueCopy.set(this.value);
+	public boolean makeCopy() {
+		if (this.copiable){
+			this.valueCopy.set(this.value);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public void setValue(int v){
@@ -99,5 +106,13 @@ public class GeneratorImpl implements Generator{
 
 	public void setIncrementable(boolean b) {
 		this.incrementable = b;
+	}
+
+	public boolean isCopiable() {
+		return copiable;
+	}
+
+	public void setCopiable(boolean copiable) {
+		this.copiable = copiable;
 	}
 }

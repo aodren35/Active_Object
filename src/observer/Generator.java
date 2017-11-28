@@ -14,12 +14,14 @@ public interface Generator  {
 	void detach(ObservatorGeneratorAsync obs);
 	Value getValue();
 	Value getCopyValue();
-	void makeCopy();
+	boolean makeCopy();
 	AlgoDiffusion getAlgo();
 	void setAlgoDiffusion(AlgoDiffusion algo);
 	void change() throws ExecutionException, InterruptedException;
 	List<ObservatorGeneratorAsync> getObservers();
 	boolean isIncrementable();
 	void setIncrementable(boolean b);
+	boolean isCopiable();
+	void setCopiable(boolean copiable);
 
 }
