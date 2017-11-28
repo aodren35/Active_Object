@@ -43,8 +43,6 @@ public class DiffusionSequentielle implements AlgoDiffusion {
             if (copied) {
                 this.copyCanaux = (ArrayList) new ArrayList<ObservatorGeneratorAsync>(this.genImpl.getObservers());
                 this.process();
-            } else {
-                this.execute();
             }
         }
     }
