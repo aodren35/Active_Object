@@ -1,14 +1,10 @@
 package strategy;
 
-import javafx.concurrent.Task;
 import observer.*;
-import strategy.AlgoDiffusion;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.*;
-import java.util.stream.Stream;
 
 public class DiffusionAtomique implements AlgoDiffusion {
 
@@ -49,7 +45,7 @@ public class DiffusionAtomique implements AlgoDiffusion {
     }
 
     @Override
-    public void dettach(ObservatorGeneratorAsync obs) {
+    public void remove(ObservatorGeneratorAsync obs) {
         this.copyCanaux.remove(obs);
     }
 
@@ -60,7 +56,7 @@ public class DiffusionAtomique implements AlgoDiffusion {
 
     @Override
     public Value getValue(ObservatorGeneratorAsync obs) {
-        this.dettach(obs);
+        this.remove(obs);
         return this.genImpl.getValue();
     }
 

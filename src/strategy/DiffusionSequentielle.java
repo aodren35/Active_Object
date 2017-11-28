@@ -1,13 +1,10 @@
 package strategy;
 
 import observer.Generator;
-import observer.GeneratorImpl;
 import observer.ObservatorGeneratorAsync;
 import observer.Value;
-import strategy.AlgoDiffusion;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -53,7 +50,7 @@ public class DiffusionSequentielle implements AlgoDiffusion {
     }
 
     @Override
-    public void dettach(ObservatorGeneratorAsync obs) {
+    public void remove(ObservatorGeneratorAsync obs) {
         this.copyCanaux.remove(obs);
         //System.out.println(this.copyCanaux);
     }
@@ -65,7 +62,7 @@ public class DiffusionSequentielle implements AlgoDiffusion {
 
     @Override
     public Value getValue(ObservatorGeneratorAsync obs) {
-        this.dettach(obs);
+        this.remove(obs);
         return this.genImpl.getCopyValue();
     }
 

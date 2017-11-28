@@ -46,7 +46,7 @@ public class Canal implements ObservatorGeneratorAsync, GeneratorAsync {
 		// GetValue
 		GetValue gv = new GetValue(this.generator, this);
 		// this.completionGetValue.submit(gv);
-		int randomNum = ThreadLocalRandom.current().nextInt(500, 2000);
+		int randomNum = ThreadLocalRandom.current().nextInt(500, 5000);
 		return this.sES.schedule(gv, randomNum, TimeUnit.MILLISECONDS);
 	}
 
@@ -55,7 +55,7 @@ public class Canal implements ObservatorGeneratorAsync, GeneratorAsync {
 		// Update
 		Update up = new Update(this.display, this);
 		//this.completionUpdate.submit(up);
-		int randomNum = ThreadLocalRandom.current().nextInt(500, 2000);
+		int randomNum = ThreadLocalRandom.current().nextInt(500, 5000);
 		return this.sES.schedule(up, randomNum, TimeUnit.MILLISECONDS);
 	}
 

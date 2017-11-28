@@ -14,7 +14,7 @@ public interface AlgoDiffusion {
 
     boolean getRunnable();
 
-    void dettach(ObservatorGeneratorAsync obs);
+    void remove(ObservatorGeneratorAsync obs);
 
     boolean copyIsEmpty();
 
