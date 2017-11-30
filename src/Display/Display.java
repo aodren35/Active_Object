@@ -22,7 +22,7 @@ public class Display implements ObservatorGenerator {
 
     public Display(Canal canalGetValue) throws ExecutionException, InterruptedException {
         this.canalGetValue = canalGetValue;
-        this.value = new Value(0);
+        this.value = new Value(-1);
     }
 
     public IntegerProperty getValueProperty() {

@@ -155,7 +155,10 @@ public class Controller implements Initializable{
          //this.afficheur1Value4.textProperty().bindBidirectional(this.afficheur4.getValueProperty(),new NumberStringConverter());
 
 
-        //this.afficheur1Value1.textProperty().setValue(this.afficheur1.getValueProperty().get() + "");
+        this.afficheur1Value1.textProperty().setValue(this.afficheur1.getValue().getValueProperty() + "");
+        this.afficheur1Value2.textProperty().setValue(this.afficheur2.getValue().getValueProperty() + "");
+        this.afficheur1Value3.textProperty().setValue(this.afficheur3.getValue().getValueProperty() + "");
+        this.afficheur1Value4.textProperty().setValue(this.afficheur4.getValue().getValueProperty() + "");
 
 
 
