@@ -54,15 +54,23 @@ public class Controller implements Initializable{
 
     @FXML
     Text afficheur1Value1 = new Text();
+    @FXML
+    Text afficheurTs1 = new Text();
 
     @FXML
     Text afficheur1Value2 = new Text();
+    @FXML
+    Text afficheurTs2 = new Text();
 
     @FXML
     Text afficheur1Value3 = new Text();
+    @FXML
+    Text afficheurTs3 = new Text();
 
     @FXML
     Text afficheur1Value4 = new Text();
+    @FXML
+    Text afficheurTs4 = new Text();
 
     @FXML
     RadioButton diffusionAtomique = new RadioButton();
@@ -165,7 +173,7 @@ public class Controller implements Initializable{
         this.afficheur1.getValue().valuePropertyProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                System.out.println("VALUE  CHANGEEEEEEEEEEEEEEEE");
+                afficheurTs1.textProperty().setValue(afficheur1.getTs().toString());
 
                 afficheur1Value1.textProperty().setValue("" + newValue);
             }
@@ -174,7 +182,9 @@ public class Controller implements Initializable{
         this.afficheur2.getValue().valuePropertyProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                System.out.println("VALUE  CHANGEEEEEEEEEEEEEEEE");
+
+                afficheurTs2.textProperty().setValue(afficheur2.getTs().toString());
+
                 afficheur1Value2.textProperty().setValue("" + newValue);
             }
         });
@@ -182,7 +192,8 @@ public class Controller implements Initializable{
         this.afficheur3.getValue().valuePropertyProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                System.out.println("VALUE  CHANGEEEEEEEEEEEEEEEE");
+                afficheurTs3.textProperty().setValue(afficheur3.getTs().toString());
+
 
                 afficheur1Value3.textProperty().setValue("" + newValue);
             }
@@ -191,7 +202,8 @@ public class Controller implements Initializable{
         this.afficheur4.getValue().valuePropertyProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                System.out.println("VALUE  CHANGEEEEEEEEEEEEEEEE");
+                afficheurTs4.textProperty().setValue(afficheur4.getTs().toString());
+
                 afficheur1Value4.textProperty().setValue("" + newValue);
             }
         });
