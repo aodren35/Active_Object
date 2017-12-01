@@ -1,6 +1,6 @@
-package strategy;
+package activeobject;
 
-import observer.*;
+import utilities.Value;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,12 +8,8 @@ import java.util.concurrent.*;
 
 public class DiffusionAtomique implements AlgoDiffusion {
 
-	//exclusion mutuelle entre les n lecteurs et les n r�dacteurs, une �criture suivie de n lectures
 
-	
 	private Generator genImpl;
-
-	private int counter = 0;
 	private boolean runnable = true;
 	private List<ObservatorGeneratorAsync>copyCanaux;
 
@@ -26,15 +22,14 @@ public class DiffusionAtomique implements AlgoDiffusion {
 
     @Override
     public void execute() throws ExecutionException, InterruptedException {
-        this.runnable = this.genImpl.isIncrementable();
-        System.out.println("Appel execute "+ this.runnable);
+        this.runnable = this.genImpl.isIncremental();
         if (this.runnable) {
-            this.genImpl.setIncrementable(false);
+            this.genImpl.setIncremental(false);
             this.copyCanaux = (ArrayList) new ArrayList<ObservatorGeneratorAsync>(this.genImpl.getObservers());
             this.process();
         } else {
             if (this.copyCanaux.isEmpty()){
-                this.genImpl.setIncrementable(true);
+                this.genImpl.setIncremental(true);
             }
         }
     }

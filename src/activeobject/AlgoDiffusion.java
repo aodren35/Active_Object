@@ -1,16 +1,14 @@
-package strategy;
+package activeobject;
 
-import observer.Generator;
-import observer.ObservatorGeneratorAsync;
-import observer.Value;
+import utilities.Value;
 
 import java.util.concurrent.ExecutionException;
 
 public interface AlgoDiffusion {
 
-    public void execute() throws ExecutionException, InterruptedException;
+    void execute() throws ExecutionException, InterruptedException;
 
-    public void configure(Generator generator);
+    void configure(Generator generator);
 
     boolean getRunnable();
 

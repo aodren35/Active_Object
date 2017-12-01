@@ -1,6 +1,4 @@
-package observer;
-
-import observer.Generator;
+package activeobject;
 
 import java.util.concurrent.Future;
 

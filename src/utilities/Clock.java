@@ -1,7 +1,6 @@
-package IHM;
+package utilities;
 
-import observer.Generator;
-import observer.GeneratorImpl;
+import activeobject.Generator;
 
 
 import javax.swing.Timer;
@@ -9,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.ExecutionException;
 
-//Parrallelisme
 public class Clock {
 
     private Timer timer;
@@ -19,7 +17,6 @@ public class Clock {
             public void actionPerformed(ActionEvent evt) {
 
                 new Thread(() -> {
-                    System.out.println("Appel de clock");
                     try {
                         gi.change();
                     } catch (ExecutionException e) {

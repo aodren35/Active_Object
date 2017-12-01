@@ -1,31 +1,19 @@
-package Canal;
+package activeobject;
 
-import activeobject.GetValue;
-import activeobject.Update;
-import observer.*;
-import Display.*;
+import utilities.Value;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.*;
 
 public class Canal implements ObservatorGeneratorAsync, GeneratorAsync {
 
 	private ScheduledExecutorService sES;
-	private CompletionService<Integer>completionGetValue;
-	private CompletionService<Boolean>completionUpdate;
-
  	private Generator generator;
  	private ObservatorGenerator display;
 
 	public Canal() {
-		//encapsulation generator
 		this.generator = null;
-		//encapsulation afficheur
 		this.display = null;
 		this.sES = Executors.newScheduledThreadPool(50);
-		this.completionGetValue = new ExecutorCompletionService<Integer>(this.sES);
-		this.completionUpdate = new ExecutorCompletionService<Boolean>(this.sES);
 	}
 
 	@Override
@@ -43,18 +31,14 @@ public class Canal implements ObservatorGeneratorAsync, GeneratorAsync {
 
 	@Override
 	public Future<Value> getValue() {
-		// GetValue
 		GetValue gv = new GetValue(this.generator, this);
-		// this.completionGetValue.submit(gv);
 		int randomNum = ThreadLocalRandom.current().nextInt(500, 5000);
 		return this.sES.schedule(gv, randomNum, TimeUnit.MILLISECONDS);
 	}
 
 	@Override
 	public Future<Void> update() {
-		// Update
 		Update up = new Update(this.display, this);
-		//this.completionUpdate.submit(up);
 		int randomNum = ThreadLocalRandom.current().nextInt(500, 5000);
 		return this.sES.schedule(up, randomNum, TimeUnit.MILLISECONDS);
 	}

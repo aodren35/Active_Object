@@ -1,11 +1,8 @@
 package Ui;
 
-import Canal.Canal;
-import Display.Display;
-import IHM.Clock;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.DoubleBinding;
-import javafx.beans.binding.StringBinding;
+import activeobject.Canal;
+import activeobject.Display;
+import utilities.Clock;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,17 +11,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.util.converter.NumberStringConverter;
-import observer.Generator;
-import observer.GeneratorImpl;
-import observer.ObservatorGenerator;
-import observer.Observer;
-import strategy.AlgoDiffusion;
-import strategy.DiffusionAtomique;
-import strategy.DiffusionEpoque;
-import strategy.DiffusionSequentielle;
+import activeobject.Generator;
+import activeobject.GeneratorImpl;
+import activeobject.ObservatorGenerator;
+import activeobject.AlgoDiffusion;
+import activeobject.DiffusionAtomique;
+import activeobject.DiffusionEpoque;
+import activeobject.DiffusionSequentielle;
 
 
 import java.net.URL;
@@ -107,24 +101,23 @@ public class Controller implements Initializable{
     public void switchAlgo(ActionEvent event) {
         if (this.started.getValue()){
             this.stop();
-            // this.generator.setValue(0);
         }
         if(event.getSource().equals(this.diffusionAtomique)) {
             this.algo = new DiffusionAtomique();
             this.algo.configure(this.generator);
-            this.generator.setIncrementable(true);
+            this.generator.setIncremental(true);
             this.sequentiel.selectedProperty().set(false);
             this.epoque.selectedProperty().set(false);
         } else if (event.getSource().equals(this.sequentiel)){
             this.algo = new DiffusionSequentielle();
             this.algo.configure(this.generator);
-            this.generator.setIncrementable(true);
+            this.generator.setIncremental(true);
             this.diffusionAtomique.selectedProperty().set(false);
             this.epoque.selectedProperty().set(false);
         } else {
             this.algo = new DiffusionEpoque();
             this.algo.configure(this.generator);
-            this.generator.setIncrementable(true);
+            this.generator.setIncremental(true);
             this.diffusionAtomique.selectedProperty().set(false);
             this.sequentiel.selectedProperty().set(false);
         }
@@ -154,21 +147,11 @@ public class Controller implements Initializable{
         this.generator.attach(this.canal2);
         this.generator.attach(this.canal3);
         this.generator.attach(this.canal4);
-        System.out.println("LOL DE LOL" + this.afficheur1.getValue().valuePropertyProperty());
-
-
-         //this.afficheur1Value1.textProperty().bindBidirectional(this.afficheur1.getValueProperty(),new NumberStringConverter());
-         //this.afficheur1Value2.textProperty().bindBidirectional(this.afficheur2.getValueProperty(),new NumberStringConverter());
-         //this.afficheur1Value3.textProperty().bindBidirectional(this.afficheur3.getValueProperty(),new NumberStringConverter());
-         //this.afficheur1Value4.textProperty().bindBidirectional(this.afficheur4.getValueProperty(),new NumberStringConverter());
-
 
         this.afficheur1Value1.textProperty().setValue(this.afficheur1.getValue().getValueProperty() + "");
         this.afficheur1Value2.textProperty().setValue(this.afficheur2.getValue().getValueProperty() + "");
         this.afficheur1Value3.textProperty().setValue(this.afficheur3.getValue().getValueProperty() + "");
         this.afficheur1Value4.textProperty().setValue(this.afficheur4.getValue().getValueProperty() + "");
-
-
 
         this.afficheur1.getValue().valuePropertyProperty().addListener(new ChangeListener<Number>() {
             @Override

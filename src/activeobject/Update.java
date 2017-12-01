@@ -1,10 +1,5 @@
 package activeobject;
 
-import Canal.Canal;
-import observer.Generator;
-import observer.GeneratorImpl;
-import observer.ObservatorGenerator;
-
 import java.util.concurrent.Callable;
 
 public class Update implements Callable<Void> {
@@ -19,7 +14,6 @@ public class Update implements Callable<Void> {
 
 	@Override
 	public Void call() {
-		System.out.println("Update call");
 		this.display.update(this.canal);
 		return null;
 	}

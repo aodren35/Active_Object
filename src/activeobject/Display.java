@@ -1,11 +1,9 @@
-package Display;
+package activeobject;
 
-import Canal.Canal;
+import utilities.Value;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.concurrent.Task;
-import observer.*;
 
 import java.sql.Timestamp;
 import java.util.concurrent.ExecutionException;
@@ -13,15 +11,14 @@ import java.util.concurrent.Future;
 
 public class Display implements ObservatorGenerator {
 
-	private Canal canalGetValue;
-
+	private Canal canal;
 	private Value value;
 
 
 	private boolean available = true;
 
     public Display(Canal canalGetValue) throws ExecutionException, InterruptedException {
-        this.canalGetValue = canalGetValue;
+        this.canal = canalGetValue;
         this.value = new Value(-1);
     }
 
@@ -39,11 +36,6 @@ public class Display implements ObservatorGenerator {
             while  (!newValue.isDone()){
                 Thread.sleep(300);
             }
-            //this.value.set(newValue.get());
-            //System.out.println("Changement dans display " +newValue.get().getValueProperty());
-            // this.valueProperty.set(this.value.getV());
-
-            //this.valueProperty.set(1000);
             while (!available) {
             }
 
@@ -51,7 +43,6 @@ public class Display implements ObservatorGenerator {
             Task<Integer> task = new Task<Integer>() {
                 @Override protected Integer call() throws Exception {
                     value.set(valueFinale);
-                    System.out.println("Value changé dans afficheur "+ value.getValueProperty());
                     available = true;
                     return 1;
                 }

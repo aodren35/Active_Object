@@ -1,10 +1,7 @@
-package observer;
+package activeobject;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import strategy.AlgoDiffusion;
+import utilities.Value;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -19,17 +16,17 @@ public class GeneratorImpl implements Generator{
 
 	private List<ObservatorGeneratorAsync> observers;
 
-	private boolean incrementable;
+	private boolean incremental;
 
-	private boolean copiable;
+	private boolean copyable;
 
 
 	public GeneratorImpl(int v) {
 		this.value = new Value(v);
 		this.valueCopy = new Value();
 		this.observers = new ArrayList<>();
-		this.incrementable = true;
-		this.copiable = true;
+		this.incremental = true;
+		this.copyable = true;
 	}
 
 	public void setAlgo(AlgoDiffusion algo) {
@@ -60,7 +57,7 @@ public class GeneratorImpl implements Generator{
 
 	@Override
 	public boolean makeCopy() {
-		if (this.copiable){
+		if (this.copyable){
 			this.valueCopy.set(this.value);
 			return true;
 		} else {
@@ -73,7 +70,7 @@ public class GeneratorImpl implements Generator{
 	}
 
 	public void change() throws ExecutionException, InterruptedException {
-		if (this.incrementable) {
+		if (this.incremental) {
 			this.value.incrementV();
 		}
 		this.algo.execute();
@@ -100,19 +97,19 @@ public class GeneratorImpl implements Generator{
 		return observers;
 	}
 
-	public boolean isIncrementable() {
-		return incrementable;
+	public boolean isIncremental() {
+		return incremental;
 	}
 
-	public void setIncrementable(boolean b) {
-		this.incrementable = b;
+	public void setIncremental(boolean b) {
+		this.incremental = b;
 	}
 
-	public boolean isCopiable() {
-		return copiable;
+	public boolean isCopyable() {
+		return copyable;
 	}
 
-	public void setCopiable(boolean copiable) {
-		this.copiable = copiable;
+	public void setCopyable(boolean copyable) {
+		this.copyable = copyable;
 	}
 }

@@ -1,9 +1,7 @@
-package observer;
+package activeobject;
 
-import javafx.beans.property.IntegerProperty;
-import strategy.AlgoDiffusion;
+import utilities.Value;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -19,9 +17,9 @@ public interface Generator  {
 	void setAlgoDiffusion(AlgoDiffusion algo);
 	void change() throws ExecutionException, InterruptedException;
 	List<ObservatorGeneratorAsync> getObservers();
-	boolean isIncrementable();
-	void setIncrementable(boolean b);
-	boolean isCopiable();
-	void setCopiable(boolean copiable);
+	boolean isIncremental();
+	void setIncremental(boolean b);
+	boolean isCopyable();
+	void setCopyable(boolean copyable);
 
 }
