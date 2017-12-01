@@ -25,6 +25,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 
+/**
+ *
+ * Class Controler pour l'interface graphique en javaFx.
+ * Contient tous les objets de classe misent en place durant ce projet.
+ *
+ * @version 1.0
+ * @author Barbé Cammille et Letellier Aodren
+ */
 public class Controller implements Initializable{
 
     private Generator generator = new GeneratorImpl(-1);

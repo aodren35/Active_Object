@@ -6,6 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ *
+ * Classe Main de l'application, permet de lancer l'application JavaFX
+ * @version 1.0
+ * @author Barbé Cammille et Letellier Aodren
+ */
 public class Main extends Application {
 
     @Override

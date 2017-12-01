@@ -9,6 +9,12 @@ import java.sql.Timestamp;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+/**
+ *
+ * Classe d'implémentation de l'Obseravateur du générateur. Afficheur comprenant la valeur affiché dans l'interface graphique utilisateur.
+ * @version 1.0
+ * @author Barbé Cammille et Letellier Aodren
+ */
 public class Display implements ObservatorGenerator {
 
 	private Canal canal;
@@ -17,7 +23,7 @@ public class Display implements ObservatorGenerator {
 
 	private boolean available = true;
 
-    public Display(Canal canalGetValue) throws ExecutionException, InterruptedException {
+    public Display(Canal canalGetValue) {
         this.canal = canalGetValue;
         this.value = new Value(-1);
     }

@@ -4,9 +4,17 @@ import utilities.Value;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+/**
+ *
+ * Implémentation de la stratégie de cohérence de donnée séquentielle. Chaque lecteur lit la valeur du redacteur
+ * précédemment copié lors de sa première lecture.
+ * Le rédacteur est capable d'écrire pendant la lecture, et la copie de la valeur est faites seulement à la fin de la lecture de tous les lecteurs.
+ *
+ * @version 1.0
+ * @author Barbé Cammille et Letellier Aodren
+ */
 public class DiffusionEpoque implements AlgoDiffusion {
 
 	private Generator genImpl;
@@ -26,14 +34,10 @@ public class DiffusionEpoque implements AlgoDiffusion {
     }
 
     @Override
-    public void execute() throws ExecutionException, InterruptedException {
+    public void execute() {
         this.process();
     }
 
-    @Override
-    public boolean getRunnable() {
-        return this.runnable;
-    }
 
     @Override
     public void remove(ObservatorGeneratorAsync obs) {

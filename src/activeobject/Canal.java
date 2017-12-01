@@ -4,6 +4,12 @@ import utilities.Value;
 
 import java.util.concurrent.*;
 
+/**
+ *
+ * Classe d'implémentation du canal. Contient le scheduleur qui permet de lancer les appels asynchrones, avec délai aléatoire, aux Method Invocation, Update et GetValue.
+ * @version 1.0
+ * @author Barbé Cammille et Letellier Aodren
+ */
 public class Canal implements ObservatorGeneratorAsync, GeneratorAsync {
 
 	private ScheduledExecutorService sES;

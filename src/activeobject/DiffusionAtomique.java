@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
+/**
+ *
+ * Implémentation de la stratégie de cohérence de donnée atomique. Chaque lecteur lit la valeur du redacteur qui lui ne peut écrire tant que tous les lecteurs n'ont pas fini de lire.
+ * @version 1.0
+ * @author Barbé Cammille et Letellier Aodren
+ */
 public class DiffusionAtomique implements AlgoDiffusion {
 
 
@@ -21,22 +27,17 @@ public class DiffusionAtomique implements AlgoDiffusion {
 
 
     @Override
-    public void execute() throws ExecutionException, InterruptedException {
+    public void execute() {
         this.runnable = this.genImpl.isIncremental();
         if (this.runnable) {
             this.genImpl.setIncremental(false);
-            this.copyCanaux = (ArrayList) new ArrayList<ObservatorGeneratorAsync>(this.genImpl.getObservers());
+            this.copyCanaux = new ArrayList<>(this.genImpl.getObservers());
             this.process();
         } else {
             if (this.copyCanaux.isEmpty()){
                 this.genImpl.setIncremental(true);
             }
         }
-    }
-
-    @Override
-    public boolean getRunnable() {
-        return this.runnable;
     }
 
     @Override

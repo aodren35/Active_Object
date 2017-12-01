@@ -4,7 +4,12 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 import java.sql.Timestamp;
-
+/**
+ *
+ * Classe utilitaire permettant de stocker la valeur ainsi que sa date de création.
+ * @version 1.0
+ * @author Barbé Cammille et Letellier Aodren
+ */
 public class Value {
     private Timestamp ts;
     private IntegerProperty valueProperty ;

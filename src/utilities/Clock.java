@@ -8,6 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Classe utilitaire permettant de lancer toutes les X secondes une tâche pour activer le rédacteur.
+ *
+ * @author Barbé Cammille et Letellier Aodren
+ * @version 1.0
+ */
 public class Clock {
 
     private Timer timer;
@@ -17,13 +23,9 @@ public class Clock {
             public void actionPerformed(ActionEvent evt) {
 
                 new Thread(() -> {
-                    try {
-                        gi.change();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+
+                    gi.change();
+
 
                 }).start();
 

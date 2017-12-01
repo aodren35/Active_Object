@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+/**
+ *
+ * Classe concrète du generator
+ * @version 1.0
+ * @author Barbé Cammille et Letellier Aodren
+ */
 public class GeneratorImpl implements Generator{
 
 	private Value value;
@@ -69,7 +75,7 @@ public class GeneratorImpl implements Generator{
 		return;
 	}
 
-	public void change() throws ExecutionException, InterruptedException {
+	public void change(){
 		if (this.incremental) {
 			this.value.incrementV();
 		}

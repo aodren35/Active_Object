@@ -4,9 +4,17 @@ import utilities.Value;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+/**
+ *
+ * Implémentation de la stratégie de cohérence de donnée par époque.
+ * Chaque lecteur reçoit la dernière valeur du générateur, temporairement parlant.
+ *
+ *
+ * @version 1.0
+ * @author Barbé Cammille et Letellier Aodren
+ */
 public class DiffusionSequentielle implements AlgoDiffusion {
 
 
@@ -22,7 +30,7 @@ public class DiffusionSequentielle implements AlgoDiffusion {
 
 
     @Override
-    public void execute() throws ExecutionException, InterruptedException {
+    public void execute()  {
         this.runnable = this.copyIsEmpty();
         if (this.runnable) {
             boolean copied = this.genImpl.makeCopy();
@@ -31,11 +39,6 @@ public class DiffusionSequentielle implements AlgoDiffusion {
                 this.process();
             }
         }
-    }
-
-    @Override
-    public boolean getRunnable() {
-        return this.runnable;
     }
 
     @Override
