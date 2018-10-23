@@ -1,10 +1,10 @@
-# Active_Object
-TP AOC M2 MIAGE MASTER 2
+# DruideEpee
+TP DruideEpee
 
 
-Design pattern Active Object Implementation.
+Design pattern DruideEpee Implementation.
 
-Project for master 2 miage
+Project for DruideEpee
 
 
 ![active_object](https://github.com/aodren35/Active_Object/blob/master/assests/active_object.png)
